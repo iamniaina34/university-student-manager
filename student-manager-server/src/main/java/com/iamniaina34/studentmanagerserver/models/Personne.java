@@ -1,7 +1,11 @@
-package com.iamniaina34.hmiprojectserver.models;
+package com.iamniaina34.studentmanagerserver.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 
 import java.time.LocalDate;
 
+@MappedSuperclass
 public class Personne {
 
     private String nom;
@@ -11,8 +15,9 @@ public class Personne {
     private String CIN;
     private LocalDate CINDu;
     private String adresse;
+    private String numeroTelephone;
 
-    public Personne(String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate CINDu, String adresse) {
+    public Personne(String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate CINDu, String adresse, String numeroTelephone) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
@@ -20,6 +25,7 @@ public class Personne {
         this.CIN = CIN;
         this.CINDu = CINDu;
         this.adresse = adresse;
+        this.numeroTelephone = numeroTelephone;
     }
 
     public Personne() {
@@ -81,4 +87,11 @@ public class Personne {
         this.adresse = adresse;
     }
 
+    public String getNumeroTelephone() {
+        return numeroTelephone;
+    }
+
+    public void setNumeroTelephone(String numeroTelephone) {
+        this.numeroTelephone = numeroTelephone;
+    }
 }
