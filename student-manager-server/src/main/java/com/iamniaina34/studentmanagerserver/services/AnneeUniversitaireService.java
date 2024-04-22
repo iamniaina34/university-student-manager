@@ -17,7 +17,7 @@ public class AnneeUniversitaireService {
         return anneeUniversitaireRepository.findAll();
     }
 
-    public AnneUniversitaire getAnneeUniversitaireByAuId(int auId) {
+    public AnneUniversitaire getAnneeUniversitaireByAuId(Integer auId) {
         return anneeUniversitaireRepository.findById(auId).orElse(null);
     }
 
@@ -25,17 +25,17 @@ public class AnneeUniversitaireService {
         return anneeUniversitaireRepository.save(anneUniversitaire);
     }
 
-    public AnneUniversitaire updateAnneeUniversitaire(int auId, AnneUniversitaire anneUniversitaireData) {
+    public AnneUniversitaire updateAnneeUniversitaire(Integer auId, AnneUniversitaire anneUniversitaireData) {
         AnneUniversitaire anneUniversitaire = anneeUniversitaireRepository.findById(auId).orElse(null);
         if (anneUniversitaire != null) {
-            anneUniversitaire.setAuDeb(anneUniversitaireData.getAuDeb());
+            anneUniversitaire.setAuDebut(anneUniversitaireData.getAuDebut());
             anneUniversitaire.setAuFin(anneUniversitaireData.getAuFin());
             return anneeUniversitaireRepository.save(anneUniversitaire);
         }
         return null;
     }
 
-    public void deleteAnneeUniversitaireByAuId(int auId) {
+    public void deleteAnneeUniversitaireByAuId(Integer auId) {
         anneeUniversitaireRepository.deleteById(auId);
     }
 }

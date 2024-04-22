@@ -13,33 +13,33 @@ public class AnneUniversitaire {
 
     @Id
     @GeneratedValue
-    private int auId;
-    private LocalDate auDeb;
+    private Integer auId;
+    private LocalDate auDebut;
     private LocalDate auFin;
 
-    public AnneUniversitaire(int auId, LocalDate auDeb, LocalDate auFin) {
+    public AnneUniversitaire(Integer auId, LocalDate auDebut, LocalDate auFin) {
         this.auId = auId;
-        this.auDeb = auDeb;
+        this.auDebut = auDebut;
         this.auFin = auFin;
     }
 
     public AnneUniversitaire() {
     }
 
-    public int getAuId() {
+    public Integer getAuId() {
         return auId;
     }
 
-    public void setAuId(int auId) {
+    public void setAuId(Integer auId) {
         this.auId = auId;
     }
 
-    public LocalDate getAuDeb() {
-        return auDeb;
+    public LocalDate getAuDebut() {
+        return auDebut;
     }
 
-    public void setAuDeb(LocalDate auDeb) {
-        this.auDeb = auDeb;
+    public void setAuDebut(LocalDate auDebut) {
+        this.auDebut = auDebut;
     }
 
     public LocalDate getAuFin() {

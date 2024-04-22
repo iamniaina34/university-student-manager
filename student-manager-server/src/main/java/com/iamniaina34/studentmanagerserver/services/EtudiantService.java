@@ -17,26 +17,38 @@ public class EtudiantService {
         return (List<Etudiant>) etudiantRepository.findAll();
     }
 
+    public Etudiant getEtudiantByEtudiantId(Integer etudiantId) {
+        return etudiantRepository.findById(etudiantId).orElse(null);
+    }
+
     public Etudiant getEtudiantByNumMat(String numMat) {
-        return etudiantRepository.findById(numMat).orElse(null);
+        return etudiantRepository.findByNumMat(numMat).orElse(null);
     }
 
     public Etudiant saveEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);
     }
 
-    public Etudiant updateEtudiant(String numMat, Etudiant etudiantData) {
-        Etudiant etudiant = etudiantRepository.findById(numMat).orElse(null);
+    public Etudiant updateEtudiant(Integer etudiantId, Etudiant etudiantData) {
+        Etudiant etudiant = etudiantRepository.findById(etudiantId).orElse(null);
         if (etudiant != null) {
+            etudiant.setNumMat(etudiantData.getNumMat());
             etudiant.setNom(etudiantData.getNom());
             etudiant.setPrenom(etudiantData.getPrenom());
+            etudiant.setDateNaissance(etudiantData.getDateNaissance());
+            etudiant.setLieuNaissance(etudiantData.getLieuNaissance());
+            etudiant.setCIN(etudiantData.getCIN());
+            etudiant.setCINDu(etudiantData.getCINDu());
+            etudiant.setNumeroTelephone(etudiantData.getNumeroTelephone());
+            etudiant.setAdresse(etudiantData.getAdresse());
             return etudiantRepository.save(etudiant);
         }
         return null;
     }
 
-    public void deleteEtudiant(String numMat) {
-        etudiantRepository.deleteById(numMat);
+    public String deleteEtudiant(Integer etudiantId) {
+        etudiantRepository.deleteById(etudiantId);
+        return ("etudiant " + etudiantId + " deleted");
     }
 
 }

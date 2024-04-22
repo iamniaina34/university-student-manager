@@ -1,6 +1,5 @@
 package com.iamniaina34.studentmanagerserver.models;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
 import java.time.LocalDate;
@@ -12,8 +11,8 @@ public class Personne {
     private String prenom;
     private LocalDate dateNaissance;
     private String lieuNaissance;
-    private String CIN;
-    private LocalDate CINDu;
+    private String cin;
+    private LocalDate cinDu;
     private String adresse;
     private String numeroTelephone;
 
@@ -22,8 +21,8 @@ public class Personne {
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
-        this.CIN = CIN;
-        this.CINDu = CINDu;
+        this.cin = CIN;
+        this.cinDu = CINDu;
         this.adresse = adresse;
         this.numeroTelephone = numeroTelephone;
     }
@@ -64,19 +63,19 @@ public class Personne {
     }
 
     public String getCIN() {
-        return CIN;
+        return cin;
     }
 
     public void setCIN(String CIN) {
-        this.CIN = CIN;
+        this.cin = CIN;
     }
 
     public LocalDate getCINDu() {
-        return CINDu;
+        return cinDu;
     }
 
     public void setCINDu(LocalDate CINDu) {
-        this.CINDu = CINDu;
+        this.cinDu = CINDu;
     }
 
     public String getAdresse() {
