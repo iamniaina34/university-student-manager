@@ -1,6 +1,10 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
-import Home from './pages/Home'
+import React from 'react'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import Home from './pages/Home';
+import Etudiants from './pages/Etudiants';
+import Classes from './pages/Classes';
+import Cours from './pages/Cours';
+import Seances from './pages/Seances';
 
 function App() {
 
@@ -8,12 +12,15 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path='/' element={<Home/>} />
+          <Route path='/etudiants' element={<Etudiants/>} />
+          <Route path='/classes' element={<Classes/>} />
+          <Route path='/cours' element={<Cours/>} />
+          <Route path='/seances' element={<Seances/>} />
         </Routes>
       </BrowserRouter>
     </>
-  )
-
+  );
 }
 
 export default App

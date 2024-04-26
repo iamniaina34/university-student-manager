@@ -1,0 +1,20 @@
+
+.body-container {
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .scroll-container {
+    height: calc(100% + 17px);
+    overflow-y: scroll;
+    padding: 16px 16px;
+  }
+  
+  .scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scroll-container {
+    scrollbar-width: none;
+  }
+  

@@ -1,12 +1,12 @@
-import React from 'react'
-import Header from '../components/Header'
+import { useEffect } from 'react';
 
 function Home() {
-  return (
-    <>
-    <Header/>
-    </>
-  )
+
+  useEffect(() => {
+    window.location.href = "/etudiants";
+  }, []);
+
+  return null; // Ou vous pouvez rendre un composant vide si nécessaire
 }
 
-export default Home
+export default Home;
