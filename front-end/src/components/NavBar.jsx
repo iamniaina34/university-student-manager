@@ -60,7 +60,7 @@ const navItems = [
 
 function Title({ sx }) {
     return (
-        <Typography variant="h6" fontSize={16} fontWeight={800} component="a" href='/' sx={sx}>
+        <Typography variant="h6" fontSize={18} fontWeight={800} component="a" href='/' sx={sx}>
             USM
         </Typography>
     );
@@ -71,7 +71,7 @@ function NavButton({ item, sx }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Button startIcon={item.icon} color = {(location.pathname === item.path ) ? 'primary' : 'secondary'} size='small' className='hover:transition-all hover:text-green-800' sx={sx}>
+            <Button startIcon={item.icon} color = {(location.pathname === item.path ) ? 'primary' : 'secondary'} size='medium' className='hover:transition-all hover:text-green-800' sx={sx}>
                 {item.label}
             </Button>
         </ThemeProvider>
