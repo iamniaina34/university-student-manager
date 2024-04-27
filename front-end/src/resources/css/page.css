@@ -8,6 +8,11 @@
     height: calc(100% + 17px);
     overflow-y: scroll;
     padding: 16px 16px;
+    display: flex;
+    min-width: 100%;
+    justify-content: start;
+    flex-direction: column;
+    gap: 16px;
   }
   
   .scroll-container::-webkit-scrollbar {

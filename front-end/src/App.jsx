@@ -1,10 +1,10 @@
 import React from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import Home from './pages/Home';
-import Etudiants from './pages/Etudiants';
-import Classes from './pages/Classes';
-import Cours from './pages/Cours';
-import Seances from './pages/Seances';
+import Etudiants from './pages/etudiants/Etudiants';
+import Classes from './pages/classes/Classes';
+import Cours from './pages/cours/Cours';
+import Seances from './pages/seances/Seances';
 
 function App() {
 

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import NavBar from '../components/NavBar';
-import './page.css'
+import { EtudiantAPI } from '../../api/table-entitites/entities';
+import NavBar from '../../components/NavBar';
 
-function Classes() {
+function Cours() {
 
     useEffect(() => {
+        EtudiantAPI
         // Todo
     }, []);
 
@@ -12,10 +13,10 @@ function Classes() {
         <div className="body-container">
             <NavBar />
             <div className="scroll-container">
-                <div>Classes</div>
+                <div>Cours</div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Classes
+export default Cours
