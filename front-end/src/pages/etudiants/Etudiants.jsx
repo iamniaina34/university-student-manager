@@ -1,33 +1,64 @@
-import React, { useEffect } from 'react'
-import { EtudiantAPI } from '../../api/table-entitites/entities';
+import React, { Component } from 'react';
 import NavBar from '../../components/NavBar';
+import EtudiantList from '../../components/etudiants/EtudiantList';
+import { Container } from '@mui/material';
+import { EtudiantAPI } from '../../api/entities';
+import EtudiantListController from '../../components/etudiants/EtudiantListController';
 
-function Etudiants() {
+export class Etudiants extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            etudiants: [],
+            filteredEtudiants: [],
+        };
+    }
 
-    useEffect(() => {
-        EtudiantAPI
-            .get()
-            .then(res => { console.log(res) })
-            .catch(err => { console.error(err) })
-    }, []);
+    componentDidMount() {
+        EtudiantAPI.get()
+            .then(etudiants => {
+                this.setState({
+                    etudiants: etudiants,
+                    filteredEtudiants: etudiants,
+                });
+            })
+            .catch(error => console.error(error));
+    }
 
-    return (
-        <div className="body-container">
-            <NavBar />
-            <div className="scroll-container max-w-96">
-                <div className="flex justify-center">
-                    Liste des etudiants
+    filterEtudiants = (searchValue) => {
+        const { etudiants } = this.state;
+        const filteredEtudiants = etudiants.filter(etudiant => {
+            return (
+                etudiant.numeroMatricule.toLowerCase().includes(searchValue.toLowerCase()) 
+                ||
+                etudiant.nom.toLowerCase().includes(searchValue.toLowerCase()) 
+                ||
+                etudiant.prenom.toLowerCase().includes(searchValue.toLowerCase())
+            );
+        });
+        this.setState({ filteredEtudiants });
+    }
+
+    render() {
+        const { filteredEtudiants } = this.state;
+        return (
+            <>
+                <div className='body-container pb-4'>
+                    <div className="scroll-container">
+                        <div>
+                            <NavBar />
+                        </div>
+                        <div>
+                            <Container>
+                                <EtudiantListController onSearch={this.filterEtudiants} />
+                                <EtudiantList etudiantList={filteredEtudiants} />
+                            </Container>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex justify-center">
-                    Liste des etudiants
-                </div>
-                <div className="flex justify-center">
-                    Liste des etudiants
-                </div>
-
-            </div>
-        </div>
-    )
+            </>
+        );
+    }
 }
 
-export default Etudiants
+export default Etudiants;

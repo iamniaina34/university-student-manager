@@ -70,7 +70,11 @@ function NavButton({ item, sx }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Button startIcon={item.icon} color={(location.pathname.includes(item.path)) ? 'primary' : 'secondary'} size='medium' className='hover:transition-all hover:text-green-800' sx={sx}>
+            <Button
+                startIcon={item.icon}
+                color={(location.pathname.includes(item.path)) ? 'primary' : 'secondary'}
+                size='medium'
+                className='hover:transition-all hover:text-green-800' sx={sx}>
                 {item.label}
             </Button>
         </ThemeProvider>
@@ -92,8 +96,8 @@ function NavBar(props) {
             <List>
                 {navItems.map((item) => (
                     <Link to={item.path} key={item.label} className="hover:bg-white">
-                        <ListItemButton sx={{ padding: '4px 8px', textAlign: 'left', fontSize: '16px', fontWeight: '500', '&:hover': { background: 'transparent' } }}>
-                            <NavButton item={item} sx={{ width: '100%', justifyContent: 'flex-start', padding: '4px 8px' }} />
+                        <ListItemButton sx={{ padding: '4px 8px', textAlign: 'left', fontSize: '16px', fontWeight: '500', '&:hover': { background: 'transparent' }, '&:active': { background: 'transparent' } }}>
+                            <NavButton item={item} sx={{ width: '100%', justifyContent: 'flex-start', padding: '8px 12px', fontWeight: 'bold', '&:hover': {background: 'rgb(245 245 245)'} }} />
                         </ListItemButton>
                     </Link>
                 ))}
@@ -123,7 +127,7 @@ function NavBar(props) {
                     }}>
                         {navItems.map((item) => (
                             <Link to={item.path} key={item.label}>
-                                <NavButton item={item} sx={{ padding: '4px 8px' }} />
+                                <NavButton item={item} sx={{ padding: {xl: '8px 16px', lg: '4px 8px'}, fontWeight: 'bold', '&:hover': {background: 'rgb(245 245 245)'} }} />
                             </Link>
                         ))}
                     </Box>
@@ -132,11 +136,12 @@ function NavBar(props) {
                         aria-label="open drawer"
                         edge="start"
                         onClick={handleDrawerToggle}
-                        sx={{ 
+                        sx={{
                             mr: 2,
-                            [theme.breakpoints.down('sm')]: {display: 'flex'},
-                            display: { sm: 'none' }, 
-                            margin: '0.75rem' }}>
+                            [theme.breakpoints.down('sm')]: { display: 'flex' },
+                            display: { sm: 'none' },
+                            margin: '0.75rem'
+                        }}>
                         <MenuIcon />
                     </IconButton>
                 </Toolbar>

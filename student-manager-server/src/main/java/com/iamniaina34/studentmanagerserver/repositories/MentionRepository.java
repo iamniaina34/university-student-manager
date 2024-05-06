@@ -1,9 +1,9 @@
 package com.iamniaina34.studentmanagerserver.repositories;
 
-import com.iamniaina34.studentmanagerserver.models.Etudiant;
+import com.iamniaina34.studentmanagerserver.models.Mention;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EtudiantRepository extends JpaRepository<Etudiant, String> {
+public interface MentionRepository extends JpaRepository<Mention, Integer> {
 }

@@ -6,38 +6,40 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "etudiant")
-public class Etudiant extends Personne{
+public class Etudiant extends Personne {
 
     @Id
-    @GeneratedValue
-    private Integer etudiantId;
-    private String numMat;
+    @Column(name = "numero_matricule", length = 8)
+    private String numeroMatricule;
 
-    public Etudiant(Integer etudiantId, String numMat, String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate CINDu, String adresse, String numeroTelephone) {
-        super(nom, prenom, dateNaissance, lieuNaissance, CIN, CINDu, adresse, numeroTelephone);
-        this.numMat = numMat;
+    @ManyToOne
+    @JoinColumns({
+            @JoinColumn(name = "classe_id", referencedColumnName = "classe_id"),
+            @JoinColumn(name = "groupe_id", referencedColumnName = "groupe_id")
+    })
+    private ClasseGroupe classeGroupe;
+
+    public Etudiant(String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate dateCin, String adresse, String numeroTelephone, String numeroMatricule, ClasseGroupe classeGroupe) {
+        super(nom, prenom, dateNaissance, lieuNaissance, CIN, dateCin, adresse, numeroTelephone);
+        this.numeroMatricule = numeroMatricule;
+        this.classeGroupe = classeGroupe;
     }
 
     public Etudiant() {}
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Etudiant[numMat: %s, nom: %s, prenom: %s]",
-                this.numMat, super.getNom(), super.getPrenom()
-        );
+    public String getNumeroMatricule() {
+        return numeroMatricule;
     }
 
-    public Integer getEtudiantId() {
-        return etudiantId;
+    public void setNumeroMatricule(String numeroMatricule) {
+        this.numeroMatricule = numeroMatricule;
     }
 
-    public String getNumMat() {
-        return numMat;
+    public ClasseGroupe getClasseGroupe() {
+        return classeGroupe;
     }
 
-    public void setNumMat(String numMat) {
-        this.numMat = numMat;
+    public void setClasseGroupe(ClasseGroupe classeGroupe) {
+        this.classeGroupe = classeGroupe;
     }
-
 }

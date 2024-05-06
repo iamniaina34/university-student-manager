@@ -1,5 +1,7 @@
 package com.iamniaina34.studentmanagerserver.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
 import java.time.LocalDate;
@@ -7,22 +9,35 @@ import java.time.LocalDate;
 @MappedSuperclass
 public class Personne {
 
+    @Column(name = "nom")
     private String nom;
+
+    @Column(name = "prenom")
     private String prenom;
+
+    @Column(name = "date_naissance")
     private LocalDate dateNaissance;
+
+    @Column(name = "lieu_naissance")
     private String lieuNaissance;
+
+    @Column(name = "cin", columnDefinition = "char(12)", unique = true)
     private String cin;
-    private LocalDate cinDu;
+    private LocalDate dateCin;
+
+    @Column(name = "adresse")
     private String adresse;
+
+    @Column(name = "numero_telephone", columnDefinition = "char(10)", unique = true)
     private String numeroTelephone;
 
-    public Personne(String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate CINDu, String adresse, String numeroTelephone) {
+    public Personne(String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate dateCin, String adresse, String numeroTelephone) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.lieuNaissance = lieuNaissance;
         this.cin = CIN;
-        this.cinDu = CINDu;
+        this.dateCin = dateCin;
         this.adresse = adresse;
         this.numeroTelephone = numeroTelephone;
     }
@@ -70,12 +85,12 @@ public class Personne {
         this.cin = CIN;
     }
 
-    public LocalDate getCINDu() {
-        return cinDu;
+    public LocalDate getdateCin() {
+        return dateCin;
     }
 
-    public void setCINDu(LocalDate CINDu) {
-        this.cinDu = CINDu;
+    public void setdateCin(LocalDate dateCin) {
+        this.dateCin = dateCin;
     }
 
     public String getAdresse() {

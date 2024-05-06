@@ -6,49 +6,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EtudiantService {
 
+    private final EtudiantRepository etudiantRepository;
+
     @Autowired
-    private EtudiantRepository etudiantRepository;
+    public EtudiantService(EtudiantRepository etudiantRepository) {
+        this.etudiantRepository = etudiantRepository;
+    }
 
     public List<Etudiant> getAllEtudiants() {
-        return (List<Etudiant>) etudiantRepository.findAll();
+        return etudiantRepository.findAll();
     }
 
-    public Etudiant getEtudiantByEtudiantId(Integer etudiantId) {
-        return etudiantRepository.findById(etudiantId).orElse(null);
+    public Optional<Etudiant> getEtudiantByNumeroMatricule(String numeroMatricule) {
+        return etudiantRepository.findById(numeroMatricule);
     }
 
-    public Etudiant getEtudiantByNumMat(String numMat) {
-        return etudiantRepository.findByNumMat(numMat).orElse(null);
-    }
-
-    public Etudiant saveEtudiant(Etudiant etudiant) {
+    public Etudiant createEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);
     }
 
-    public Etudiant updateEtudiant(Integer etudiantId, Etudiant etudiantData) {
-        Etudiant etudiant = etudiantRepository.findById(etudiantId).orElse(null);
-        if (etudiant != null) {
-            etudiant.setNumMat(etudiantData.getNumMat());
-            etudiant.setNom(etudiantData.getNom());
-            etudiant.setPrenom(etudiantData.getPrenom());
-            etudiant.setDateNaissance(etudiantData.getDateNaissance());
-            etudiant.setLieuNaissance(etudiantData.getLieuNaissance());
-            etudiant.setCIN(etudiantData.getCIN());
-            etudiant.setCINDu(etudiantData.getCINDu());
-            etudiant.setNumeroTelephone(etudiantData.getNumeroTelephone());
-            etudiant.setAdresse(etudiantData.getAdresse());
+    public Etudiant updateEtudiant(String numeroMatricule, Etudiant etudiantDetails) {
+        Etudiant etudiant = etudiantRepository.findById(numeroMatricule).orElse(null);
+        if (etudiant != null){
+            etudiant.setNom(etudiantDetails.getNom());
+            etudiant.setPrenom(etudiantDetails.getPrenom());
             return etudiantRepository.save(etudiant);
         }
         return null;
     }
 
-    public String deleteEtudiant(Integer etudiantId) {
-        etudiantRepository.deleteById(etudiantId);
-        return ("etudiant " + etudiantId + " deleted");
+    public void deleteEtudiant(String numeroMatricule) {
+        etudiantRepository.deleteById(numeroMatricule);
     }
-
 }

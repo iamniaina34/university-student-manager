@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { EtudiantAPI } from '../../api/table-entitites/entities';
+import { EtudiantAPI } from '../../api/entities';
 import NavBar from '../../components/NavBar';
 
 function Seances() {

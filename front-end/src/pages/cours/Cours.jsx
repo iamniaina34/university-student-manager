@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react'
-import { EtudiantAPI } from '../../api/table-entitites/entities';
 import NavBar from '../../components/NavBar';
 
 function Cours() {
 
     useEffect(() => {
-        EtudiantAPI
-        // Todo
     }, []);
 
     return (
