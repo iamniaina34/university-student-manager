@@ -9,8 +9,12 @@ import java.util.List;
 @Service
 public class GradeService {
 
+    private final GradeRepository gradeRepository;
+
     @Autowired
-    private GradeRepository gradeRepository;
+    public GradeService(GradeRepository gradeRepository) {
+        this.gradeRepository = gradeRepository;
+    }
 
     public List<Grade> getAllGrades() {
         return gradeRepository.findAll();

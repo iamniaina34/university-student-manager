@@ -9,8 +9,12 @@ import java.util.List;
 @Service
 public class ParcoursService {
 
+    private final ParcoursRepository parcoursRepository;
+
     @Autowired
-    private ParcoursRepository parcoursRepository;
+    public ParcoursService(ParcoursRepository parcoursRepository) {
+        this.parcoursRepository = parcoursRepository;
+    }
 
     public List<Parcours> getAllParcours() {
         return parcoursRepository.findAll();

@@ -9,8 +9,12 @@ import java.util.List;
 @Service
 public class ProfesseurService {
 
+    private final ProfesseurRepository professeurRepository;
+
     @Autowired
-    private ProfesseurRepository professeurRepository;
+    public ProfesseurService(ProfesseurRepository professeurRepository) {
+        this.professeurRepository = professeurRepository;
+    }
 
     public List<Professeur> getAllProfesseurs() {
         return professeurRepository.findAll();

@@ -9,8 +9,12 @@ import java.util.List;
 @Service
 public class ClasseService {
 
+    private final ClasseRepository classeRepository;
+
     @Autowired
-    private ClasseRepository classeRepository;
+    public ClasseService(ClasseRepository classeRepository) {
+        this.classeRepository = classeRepository;
+    }
 
     public List<Classe> getAllClasses() {
         return classeRepository.findAll();

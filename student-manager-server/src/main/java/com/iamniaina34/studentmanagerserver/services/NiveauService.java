@@ -9,8 +9,12 @@ import java.util.List;
 @Service
 public class NiveauService {
 
+    private final NiveauRepository niveauRepository;
+
     @Autowired
-    private NiveauRepository niveauRepository;
+    public NiveauService(NiveauRepository niveauRepository) {
+        this.niveauRepository = niveauRepository;
+    }
 
     public List<Niveau> getAllNiveaux() {
         return niveauRepository.findAll();

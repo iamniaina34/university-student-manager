@@ -9,8 +9,12 @@ import java.util.List;
 @Service
 public class MentionService {
 
+    private final MentionRepository mentionRepository;
+
     @Autowired
-    private MentionRepository mentionRepository;
+    public MentionService(MentionRepository mentionRepository) {
+        this.mentionRepository = mentionRepository;
+    }
 
     public List<Mention> getAllMentions() {
         return mentionRepository.findAll();

@@ -1,6 +1,5 @@
 package com.iamniaina34.studentmanagerserver.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -15,7 +14,7 @@ public class Professeur extends Personne{
     private Integer professeurId;
 
     @ManyToOne
-    @JoinColumn(name = "grade_id", referencedColumnName = "grade_id", nullable = true)
+    @JoinColumn(name = "grade_id", referencedColumnName = "grade_id")
     private Grade grade;
 
     @Column(name = "professeur_pseudo", unique = true)
