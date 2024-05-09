@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8085';
+// Change to the host adress if you want to share access with your phone
+const BASE_URL = 'http://127.0.0.1:8085';
 const INDEX_PATH = "/index";
 const ADD_PATH = "/create";
 const UPDATE_PATH = "/update";

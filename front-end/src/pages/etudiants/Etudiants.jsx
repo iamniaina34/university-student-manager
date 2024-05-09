@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from '../../components/NavBar';
 import EtudiantList from '../../components/etudiants/EtudiantList';
-import { Container } from '@mui/material';
+import { Container, Divider, Typography } from '@mui/material';
 import { EtudiantAPI } from '../../api/entities';
 import EtudiantListController from '../../components/etudiants/EtudiantListController';
 
@@ -29,9 +29,9 @@ export class Etudiants extends Component {
         const { etudiants } = this.state;
         const filteredEtudiants = etudiants.filter(etudiant => {
             return (
-                etudiant.numeroMatricule.toLowerCase().includes(searchValue.toLowerCase()) 
+                etudiant.numeroMatricule.toLowerCase().includes(searchValue.toLowerCase())
                 ||
-                etudiant.nom.toLowerCase().includes(searchValue.toLowerCase()) 
+                etudiant.nom.toLowerCase().includes(searchValue.toLowerCase())
                 ||
                 etudiant.prenom.toLowerCase().includes(searchValue.toLowerCase())
             );
@@ -49,7 +49,11 @@ export class Etudiants extends Component {
                             <NavBar />
                         </div>
                         <div>
-                            <Container>
+                            <Container sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '24px'
+                            }}>
                                 <EtudiantListController onSearch={this.filterEtudiants} />
                                 <EtudiantList etudiantList={filteredEtudiants} />
                             </Container>

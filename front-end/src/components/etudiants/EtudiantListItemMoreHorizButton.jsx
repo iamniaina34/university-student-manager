@@ -6,7 +6,6 @@ import { MoreHoriz } from '@mui/icons-material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { EtudiantAPI } from '../../api/entities';
-import { useNavigate } from 'react-router-dom';
 
 export default function EtudiantListItemMoreHorizButton({ etudiant }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,7 +34,7 @@ export default function EtudiantListItemMoreHorizButton({ etudiant }) {
 
     return (
         <div>
-            <Tooltip title='Action' placement='bottom' arrow>
+            <Tooltip title='' placement='bottom' arrow>
                 <IconButton
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
@@ -52,6 +51,15 @@ export default function EtudiantListItemMoreHorizButton({ etudiant }) {
                 open={open}
                 onClose={handleClose}
                 TransitionComponent={Fade}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                getContentAnchorEl={null}
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
                 }}>

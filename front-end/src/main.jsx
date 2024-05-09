@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './resources/css/tailwind.css'
+import App from './App.jsx'
 import './resources/css/page.css'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';

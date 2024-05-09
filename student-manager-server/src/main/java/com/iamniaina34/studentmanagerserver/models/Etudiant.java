@@ -1,5 +1,6 @@
 package com.iamniaina34.studentmanagerserver.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ public class Etudiant extends Personne {
     @Column(name = "numero_matricule", length = 8)
     private String numeroMatricule;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "classe_id", referencedColumnName = "classe_id"),

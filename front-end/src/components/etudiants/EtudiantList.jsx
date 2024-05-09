@@ -61,12 +61,12 @@ export class EtudiantList extends Component {
         const { etudiantList, isLoading } = this.state
         return (
             <React.Fragment>
-                <div className='flex flex-col justify-center'>
+                <div className='flex flex-col justify-center rounded-2xl gap-4'>
                     {isLoading ? (
                         <EtudiantListLoadingSkeleton count={10} />
                     ) : etudiantList.length > 0 ? (
                         etudiantList.map((etudiant) => (
-                            <EtudiantListItem etudiant={etudiant} key={etudiant.numMat} />
+                            <EtudiantListItem etudiant={etudiant} key={etudiant.numeroMatricule} />
                         ))
                     ) : (
                         <EmptyEtudiantListItem />

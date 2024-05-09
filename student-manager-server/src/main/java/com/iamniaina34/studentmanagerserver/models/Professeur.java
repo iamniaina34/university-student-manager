@@ -1,5 +1,6 @@
 package com.iamniaina34.studentmanagerserver.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
