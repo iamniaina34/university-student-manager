@@ -9,10 +9,19 @@ const DELETE_PATH = "/delete";
 
 const createAPIRequest = (URL) => {
   return {
-    get: async () => {
+    index: async () => {
       try {
         const response = await axios.get(BASE_URL + URL + INDEX_PATH);
-        return response.data;
+        return response;
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données:', error);
+        throw error;
+      }
+    },
+    get: async (ID = '') => {
+      try {
+        const response = await axios.get(BASE_URL + URL + "/" + ID);
+        return response;
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
         throw error;
@@ -20,8 +29,8 @@ const createAPIRequest = (URL) => {
     },
     post: async (data) => {
       try {
-        const response = await axios.post(BASE_URL + URL + ADD_PATH, data );
-        return response.data;
+        const response = await axios.post(BASE_URL + URL + ADD_PATH, data);
+        return response;
       } catch (error) {
         console.error('Erreur lors de l\'ajout de données:', error);
         throw error;
@@ -30,7 +39,7 @@ const createAPIRequest = (URL) => {
     put: async (id, data) => {
       try {
         const response = await axios.put(`${BASE_URL + URL + UPDATE_PATH}/${id}`, data);
-        return response.data;
+        return response;
       } catch (error) {
         console.error('Erreur lors de la mise à jour des données:', error);
         throw error;
@@ -39,7 +48,7 @@ const createAPIRequest = (URL) => {
     delete: async (id) => {
       try {
         const response = await axios.delete(`${BASE_URL + URL + DELETE_PATH}/${id}`);
-        return response.data;
+        return response;
       } catch (error) {
         console.error('Erreur lors de la suppression des données:', error);
         throw error;

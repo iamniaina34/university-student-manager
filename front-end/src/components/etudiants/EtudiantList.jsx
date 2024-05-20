@@ -1,80 +1,55 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import EtudiantListItem from './EtudiantListItem';
 import EmptyEtudiantListItem from './EmptyEtudiantListItem';
 import EtudiantListLoadingSkeleton from './EtudiantListLoadingSkeleton';
 
-export class EtudiantList extends Component {
+function EtudiantList({ etudiantList: initialEtudiantList }) {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            etudiantList: [],
-            isLoading: true,
-            elapsedTime: 0
-        }
-    }
+    const [etudiantList, setEtudiantList] = useState(initialEtudiantList);
+    
+    const columns = [
+        { field: 'numeroMatricule', headerName: 'IM', width: 70 },
+        { field: 'nom', headerName: 'Nom', width: 130 },
+        { field: 'prenom', headerName: 'Prénom', width: 130 },
+        { field: 'niveau', headerName: 'Niveau', width: 130 },
+        { field: 'parcours', headerName: 'Parcours', width: 130 },
+        {
+            field: 'fullName',
+            headerName: 'Noms',
+            description: 'This column has a value getter and is not sortable.',
+            sortable: false,
+            width: 160,
+            valueGetter: (value, row) => `${row.nom || ''} ${row.prenom || ''}`,
+        },
+    ];
 
-    static getDerivedStateFromProps(props, state) {
-        if (props.etudiantList !== state.etudiantList) {
-            return ({
-                etudiantList: props.etudiantList
-            });
-        }
-        return null;
-    }
+    useEffect(
+        () => {
+            if (initialEtudiantList !== etudiantList) {
+                setEtudiantList(initialEtudiantList);
+            }
+        },
+        [initialEtudiantList]
+    );
 
-    componentDidMount() {
-        this.interval = setInterval(this.checkData, 100);
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.etudiantList !== this.props.etudiantList) {
-            this.setState({
-                isLoading: true,
-                elapsedTime: 0
-            });
-            clearInterval(this.interval);
-            this.interval = setInterval(this.checkData, 100);
-        }
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    checkData = () => {
-        const { elapsedTime } = this.state;
-        if (elapsedTime >= 50) {
-            clearInterval(this.interval);
-            this.setState({ isLoading: false });
-        } else if (this.props.etudiantList && this.props.etudiantList.length > 0) {
-            clearInterval(this.interval);
-            this.setState({ isLoading: false });
-        } else {
-            this.setState(prevState => ({
-                elapsedTime: prevState.elapsedTime + 1
-            }));
-        }
-    }
-
-    render() {
-        const { etudiantList, isLoading } = this.state
-        return (
-            <React.Fragment>
-                <div className='flex flex-col justify-center rounded-2xl gap-4'>
-                    {isLoading ? (
-                        <EtudiantListLoadingSkeleton count={10} />
-                    ) : etudiantList.length > 0 ? (
-                        etudiantList.map((etudiant) => (
-                            <EtudiantListItem etudiant={etudiant} key={etudiant.numeroMatricule} />
-                        ))
-                    ) : (
-                        <EmptyEtudiantListItem />
-                    )}
-                </div>
-            </React.Fragment>
-        );
-    }
+    return (
+        <div className='flex flex-col justify-center rounded-2xl py-2'>
+                    <div style={{ height: 400, width: '100%' }}>
+                        <DataGrid
+                            rows={etudiantList}
+                            columns={columns}
+                            initialState={{
+                                pagination: {
+                                    paginationModel: { page: 0, pageSize: 5 },
+                                },
+                            }}
+                            pageSizeOptions={[5, 10]}
+                            checkboxSelection
+                        />
+                    </div>
+        </div>
+    );
 }
 
-export default EtudiantList
+export default EtudiantList;

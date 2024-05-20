@@ -1,6 +1,12 @@
 package com.iamniaina34.studentmanagerserver.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "parcours")
@@ -25,12 +31,17 @@ public class Parcours {
     @JoinColumn(name = "professeur_id", referencedColumnName = "professeur_id", nullable = true)
     private Professeur responsable;
 
-    public Parcours(Integer parcoursId, Mention mention, Professeur responsable, String parcoursDesign, String parcoursAcro) {
+    @JsonIgnoreProperties("parcours")
+    @OneToMany(mappedBy = "parcours")
+    private List<Etudiant> etudiants;
+
+    public Parcours(Integer parcoursId, Mention mention, Professeur responsable, String parcoursDesign, String parcoursAcro, List<Etudiant> etudiants) {
         this.parcoursId = parcoursId;
         this.mention = mention;
         this.responsable = responsable;
         this.parcoursDesign = parcoursDesign;
         this.parcoursAcro = parcoursAcro;
+        this.etudiants = etudiants;
     }
 
     public Parcours() {
@@ -74,5 +85,13 @@ public class Parcours {
 
     public void setParcoursAcro(String parcoursAcro) {
         this.parcoursAcro = parcoursAcro;
+    }
+
+    public List<Etudiant> getEtudiants() {
+        return etudiants;
+    }
+
+    public void setEtudiants(List<Etudiant> etudiants) {
+        this.etudiants = etudiants;
     }
 }

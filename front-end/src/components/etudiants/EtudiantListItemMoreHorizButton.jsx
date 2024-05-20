@@ -8,24 +8,30 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { EtudiantAPI } from '../../api/entities';
 
 export default function EtudiantListItemMoreHorizButton({ etudiant }) {
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    
     const handleClick = (event) => {
         event.stopPropagation();
         setAnchorEl(event.currentTarget);
     };
+    
     const handleClose = (event) => {
         event.stopPropagation();
         setAnchorEl(null);
     };
+    
     const handleEdit = (e) => {
         handleClose(e)
         console.log("Edit");
     };
+    
     const handleConfirmDelete = (event) => {
         confirm("Etes-vous sur ?") && handleDelete(event);
         handleClose(event);
     };
+    
     const handleDelete = (e) => {
         console.log("delete");
         EtudiantAPI.delete(etudiant.numeroMatricule)
@@ -40,6 +46,7 @@ export default function EtudiantListItemMoreHorizButton({ etudiant }) {
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
+                    disableTouchRipple
                     onClick={handleClick}>
                     <MoreHoriz />
                 </IconButton>
@@ -62,14 +69,21 @@ export default function EtudiantListItemMoreHorizButton({ etudiant }) {
                 getContentAnchorEl={null}
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
-                }}>
-                <MenuItem onClick={handleEdit}>
+                }}
+                >
+                <MenuItem
+                    disableTouchRipple
+                    onClick={handleEdit}
+                >
                     <ListItemIcon>
                         <EditRoundedIcon fontSize='small' />
                     </ListItemIcon>
                     <ListItemText><span className='text-gray-800 text-sm'>Modifier</span></ListItemText>
                 </MenuItem>
-                <MenuItem onClick={handleConfirmDelete}>
+                <MenuItem 
+                    disableTouchRipple
+                onClick={handleConfirmDelete}
+                >
                     <ListItemIcon>
                         <DeleteRoundedIcon fontSize='small' />
                     </ListItemIcon>

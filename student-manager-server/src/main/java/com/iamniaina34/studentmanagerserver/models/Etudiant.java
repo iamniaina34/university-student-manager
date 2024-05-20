@@ -1,6 +1,9 @@
 package com.iamniaina34.studentmanagerserver.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,18 +16,21 @@ public class Etudiant extends Personne {
     @Column(name = "numero_matricule", length = 8)
     private String numeroMatricule;
 
-    @JsonBackReference
+    @JsonIgnoreProperties("etudiants")
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "classe_id", referencedColumnName = "classe_id"),
-            @JoinColumn(name = "groupe_id", referencedColumnName = "groupe_id")
-    })
-    private ClasseGroupe classeGroupe;
+    @JoinColumn(name = "niveau_id", referencedColumnName = "niveau_id", nullable = false)
+    private Niveau niveau;
 
-    public Etudiant(String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate dateCin, String adresse, String numeroTelephone, String numeroMatricule, ClasseGroupe classeGroupe) {
+    @JsonIgnoreProperties("etudiants")
+    @ManyToOne
+    @JoinColumn(name = "parcours_id", referencedColumnName = "parcours_id", nullable = false)
+    private Parcours parcours;
+
+    public Etudiant(String nom, String prenom, LocalDate dateNaissance, String lieuNaissance, String CIN, LocalDate dateCin, String adresse, String numeroTelephone, String numeroMatricule, Niveau niveau, Parcours parcours) {
         super(nom, prenom, dateNaissance, lieuNaissance, CIN, dateCin, adresse, numeroTelephone);
         this.numeroMatricule = numeroMatricule;
-        this.classeGroupe = classeGroupe;
+        this.niveau = niveau;
+        this.parcours = parcours;
     }
 
     public Etudiant() {}
@@ -37,11 +43,19 @@ public class Etudiant extends Personne {
         this.numeroMatricule = numeroMatricule;
     }
 
-    public ClasseGroupe getClasseGroupe() {
-        return classeGroupe;
+    public Niveau getNiveau() {
+        return niveau;
     }
 
-    public void setClasseGroupe(ClasseGroupe classeGroupe) {
-        this.classeGroupe = classeGroupe;
+    public void setNiveau(Niveau niveau) {
+        this.niveau = niveau;
+    }
+
+    public Parcours getParcours() {
+        return parcours;
+    }
+
+    public void setParcours(Parcours parcours) {
+        this.parcours = parcours;
     }
 }
