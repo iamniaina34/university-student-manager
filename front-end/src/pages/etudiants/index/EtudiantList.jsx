@@ -50,7 +50,13 @@ const columns = [
         field: 'numeroTelephone',
         headerName: 'Téléphone',
         width: 128,
-    }
+    },
+    {
+        field: 'adresse',
+        headerName: 'Adresse',
+        width: 512,
+        sortable: false,
+    },
     // Other columns
 ];
 
@@ -68,7 +74,7 @@ export default function EtudiantList(props) {
     }, [props.rows]);
 
     return (
-        <div style={{ height: window.innerHeight - 200, maxHeight: 1200, width: '100%' }}>
+        <div style={{ height: '100%', maxHeight: 1200, width: '100%' }}>
             <DataGrid
                 density='standard'
                 getRowId={row => row.numeroMatricule}

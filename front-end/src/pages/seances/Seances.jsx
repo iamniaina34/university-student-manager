@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react'
-import { EtudiantAPI } from '../../api/entities';
-import NavBar from '../../components/NavBar';
+import { Typography } from '@mui/material';
 
 function Seances() {
 
     useEffect(() => {
-        EtudiantAPI
         // Todo
     }, []);
 
     return (
-        <div className="body-container">
-            <NavBar />
-            <div className="scroll-container">
-                <div>Seances</div>
+        <React.Fragment>
+            <div className='p-4 px-0 flex justify-between items-center'>
+                <Typography variant='h5' fontWeight={600} sx={{ color: '#111111' }}>
+                    Liste des séances
+                </Typography>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

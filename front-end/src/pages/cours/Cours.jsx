@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import NavBar from '../../components/NavBar';
+import { Typography } from '@mui/material';
 
 function Cours() {
 
@@ -7,12 +8,13 @@ function Cours() {
     }, []);
 
     return (
-        <div className="body-container">
-            <NavBar />
-            <div className="scroll-container">
-                <div>Cours</div>
+        <React.Fragment>
+            <div className='p-4 px-0 flex justify-between items-center'>
+                <Typography variant='h5' fontWeight={600} sx={{ color: '#111111' }}>
+                    Liste des cours
+                </Typography>
             </div>
-        </div>
+        </React.Fragment>
     )
 }
 

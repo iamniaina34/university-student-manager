@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import NavBar from '../../../components/NavBar';
-import { Container, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Container, Link, Typography } from '@mui/material';
 import { EtudiantAPI } from '../../../api/entities';
 import EtudiantList from './EtudiantList';
+import SideNavBar from '../../../components/navBar/SideNavBar';
 
 function Etudiants() {
 
@@ -17,28 +18,14 @@ function Etudiants() {
     }, []);
 
     return (
-        <>
-            <div className='body-container'>
-                <div className="scroll-container">
-                    <div>
-                        <NavBar />
-                    </div>
-                    <div>
-                        <Container sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '24px'
-                        }}>
-                            <Typography variant='h5' fontWeight={600}>
-                                Liste des étudiants
-                            </Typography>
-                            <EtudiantList rows = {etudiants} />
-                        </Container>
-                    </div>
-                    <br />
-                </div>
+        <React.Fragment>
+            <div className='p-4 px-0 flex justify-between items-center'>
+                <Typography variant='h5' fontWeight={600} sx={{ color: '#111111' }}>
+                    Liste des etudiants
+                </Typography>
             </div>
-        </>
+            <EtudiantList rows={etudiants} />
+        </React.Fragment>
     );
 }
 

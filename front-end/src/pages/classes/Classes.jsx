@@ -9,12 +9,13 @@ function Classes() {
     }, []);
 
     return (
-        <div className="body-container">
-            <NavBar />
-            <div className="scroll-container">
-                <Typography className='flex justify-center text-red-900'>Classes</Typography>
+        <React.Fragment>
+            <div className='p-4 px-0 flex justify-between items-center'>
+                <Typography variant='h5' fontWeight={600} sx={{ color: '#111111' }}>
+                    Liste des classes
+                </Typography>
             </div>
-        </div>
+        </React.Fragment>
     );
 }
 
