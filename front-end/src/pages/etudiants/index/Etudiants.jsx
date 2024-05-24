@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import NavBar from '../../../components/NavBar';
-import { Box, Breadcrumbs, Container, Link, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { EtudiantAPI } from '../../../api/entities';
 import EtudiantList from './EtudiantList';
-import SideNavBar from '../../../components/navBar/SideNavBar';
 
 function Etudiants() {
 
@@ -13,8 +11,11 @@ function Etudiants() {
         EtudiantAPI.index()
             .then(response => {
                 setEtudiants(response.data);
+                console.log(response);
             })
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.log(error)
+            });
     }, []);
 
     return (

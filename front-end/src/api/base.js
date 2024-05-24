@@ -14,7 +14,7 @@ const createAPIRequest = (URL) => {
         const response = await axios.get(BASE_URL + URL + INDEX_PATH);
         return response;
       } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
+        // console.error('Erreur lors de la récupération des données:', error);
         throw error;
       }
     },

@@ -6,7 +6,7 @@ function Home() {
     window.location.href = "/etudiants";
   }, []);
 
-  return null; // Ou vous pouvez rendre un composant vide si nécessaire
+  return null;
 }
 
 export default Home;

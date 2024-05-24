@@ -9,7 +9,7 @@ import Cours from './pages/cours/Cours';
 import Seances from './pages/seances/Seances';
 import SideNavBar from './components/navBar/SideNavBar';
 import EtudiantProfile from './pages/etudiants/etudiantProfile/EtudiantProfile';
-import Breadcrumb from './components/Breadcrumb';
+import Breadcrumb from './components/breadcrumbs/Breadcrumb';
 
 const theme = createTheme({
     palette: {
@@ -30,11 +30,11 @@ function App() {
                     <div>
                         <SideNavBar />
                     </div>
-                    <div className='flex flex-col flex-1 w-full h-full overflow-auto'>
-                        <div className='p-4 pb-2 flex justify-between items-center'>
+                    <div className='flex flex-col flex-1 w-full h-full overflow-auto gap-2'>
+                        <div className='py-4 pb-2 flex justify-between items-center'>
                             <Breadcrumb />
                         </div>
-                        <div className='px-0 py-2'>
+                        <div className=''>
                             <Routes>
                                 <Route path='/' element={<Home />} />
                                 <Route path='/etudiants' element={<Etudiants />} />

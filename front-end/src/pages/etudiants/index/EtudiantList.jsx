@@ -26,7 +26,7 @@ const columns = [
         field: 'nom',
         headerName: 'Nom',
         type: 'string',
-        width: 192
+        width: 192,
     },
     {
         field: 'prenom',
@@ -54,11 +54,19 @@ const columns = [
     {
         field: 'adresse',
         headerName: 'Adresse',
-        width: 512,
+        // width: 512,
         sortable: false,
     },
     // Other columns
 ];
+
+const localText = {
+    footerRowSelected: (count) => count !== 1 ? `${count.toLocaleString()} étudiants sélectionnés` : `${count.toLocaleString()} étudiant sélectionné`,
+    MuiTablePagination: {
+        labelDisplayedRows: ({from, to, count}) => `${from} à ${to} sur ${count !== 1 ? count : `plus de ${to}`} étudiants`,
+        labelRowsPerPage: 'Nombre d\'étudiants par page: ',
+    },
+};
 
 export default function EtudiantList(props) {
 
@@ -74,20 +82,20 @@ export default function EtudiantList(props) {
     }, [props.rows]);
 
     return (
-        <div style={{ height: '100%', maxHeight: 1200, width: '100%' }}>
+        <div className={`${rows.length === 0 ? `h-40` : `h-full`}`}>
             <DataGrid
-                density='standard'
-                getRowId={row => row.numeroMatricule}
                 rows={rows}
                 columns={columns}
+                getRowId={row => row.numeroMatricule}
                 initialState={{
                     pagination: {
                         paginationModel: { page: 0, pageSize: 5 },
                     },
                 }}
+                pageSizeOptions={[5, 10, 20, 50]}
                 disableRowSelectionOnClick
                 checkboxSelection
-                pageSizeOptions={[5, 10]}
+                localeText={localText}
                 onRowClick={row => {handleRedirect(row.id)}}
             />
         </div>
