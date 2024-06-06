@@ -48,20 +48,24 @@ export default function SideNavBar() {
     };
 
     useEffect(() => {
-        const pathnames = location.pathname.split('/').filter((x) => x);
-        const currentPath = pathnames[pathnames.length - 1];
-
-        const foundItem = sideNavBarItems.find((item) => item.path === currentPath);
-        if (foundItem) {
-            setActiveItem(foundItem);
-        }
+        const pathname = location.pathname;
+        sideNavBarItems.forEach(item => {
+            if (pathname.includes(item.path)) {
+                setActiveItem(item);
+            }    
+        })
     }, [location.pathname]);
 
     return (
-        <aside className={`h-screen bg-white transition-width duration-300 ${expanded ? 'w-64' : 'w-20'}`}>
-            <nav className={`h-full flex flex-col bg-inherit shadow-sm`}>
+        <aside className={`
+        h-screen bg-white transition-width duration-300 py-2
+        ${expanded ? 'w-64' : 'w-20'}
+        `}>
+            <nav className={`
+            h-full flex flex-col bg-inherit shadow-sm gap-4
+            `}>
                 <div className={`
-                p-4 pb-2 flex items-center h-16
+                flex items-center ml-3 mr-1
                 ${expanded ? 'justify-between' : 'justify-center'}
                 `}>
                     <Link href='/' underline='none'>
@@ -78,7 +82,7 @@ export default function SideNavBar() {
                         {expanded ? <MenuOpen fontSize='medium' /> : <MenuIcon fontSize='medium' />}
                     </IconButton>
                 </div>
-                <ul className={`flex-1 px-3 py-2`}>
+                <ul className={`flex flex-col flex-1 mx-3 gap-1`}>
                     {sideNavBarItems.map((item) => (
                         <Tooltip title={!expanded ? item.text : ""} placement="right" arrow key={item.text}>
                             <div>

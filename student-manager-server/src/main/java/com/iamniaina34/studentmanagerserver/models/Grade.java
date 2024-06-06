@@ -1,15 +1,16 @@
 package com.iamniaina34.studentmanagerserver.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "grade")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "gradeId"
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "gradeId")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Grade {
 
     @Id
@@ -22,6 +23,10 @@ public class Grade {
 
     @Column(name = "grade_design", unique = true)
     private String gradeDesign;
+
+    @OneToMany(mappedBy = "grade")
+    @JsonIgnoreProperties("grade")
+    private Set<Professeur> professeurs;
 
     public Grade(Integer gradeId, String gradeAcro, String gradeDesign) {
         this.gradeId = gradeId;
@@ -56,4 +61,11 @@ public class Grade {
         this.gradeDesign = gradeDesign;
     }
 
+    public Set<Professeur> getProfesseurs() {
+        return professeurs;
+    }
+
+    public void setProfesseurs(Set<Professeur> professeurs) {
+        this.professeurs = professeurs;
+    }
 }

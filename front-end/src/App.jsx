@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { createTheme } from '@mui/material';
+import { Typography, createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import Home from './pages/Home';
 import Etudiants from './pages/etudiants/index/Etudiants';
@@ -9,7 +9,8 @@ import Cours from './pages/cours/Cours';
 import Seances from './pages/seances/Seances';
 import SideNavBar from './components/navBar/SideNavBar';
 import EtudiantProfile from './pages/etudiants/etudiantProfile/EtudiantProfile';
-import Breadcrumb from './components/breadcrumbs/Breadcrumb';
+import AddEtudiant from './pages/etudiants/addEtudiant/AddEtudiant';
+import HeaderNav from './components/navBar/HeaderNav';
 
 const theme = createTheme({
     palette: {
@@ -17,7 +18,7 @@ const theme = createTheme({
             main: '#1a9948',
         },
         secondary: {
-            main: '#555',
+            main: '#444444',
         },
     },
 });
@@ -26,26 +27,29 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
-                <div className='flex overflow-hidden gap-4'>
-                    <div>
+                <div className='flex overflow-hidden gap-4 2xl:gap-8'>
+                    <div className=''>
                         <SideNavBar />
                     </div>
-                    <div className='flex flex-col flex-1 w-full h-full overflow-auto gap-2'>
-                        <div className='py-4 pb-2 flex justify-between items-center'>
-                            <Breadcrumb />
+                    <div className='py-2 mx-2 flex flex-col flex-1 h-full overflow-hidden gap-4'>
+                        <div className='flex justify-between items-center'>
+                            <HeaderNav />
                         </div>
-                        <div className=''>
+                        <div className='flex flex-col gap-4'>
                             <Routes>
                                 <Route path='/' element={<Home />} />
                                 <Route path='/etudiants' element={<Etudiants />} />
                                 <Route path='/etudiants/:numeroMatricule' element={<EtudiantProfile />} />
+                                <Route path='/etudiants/ajouter' element={<AddEtudiant />} />
                                 <Route path='/classes' element={<Classes />} />
                                 <Route path='/cours' element={<Cours />} />
                                 <Route path='/seances' element={<Seances />} />
                             </Routes>
                         </div>
                     </div>
-                    <br />
+
+                    <div>
+                    </div>
                 </div>
             </BrowserRouter>
         </ThemeProvider>

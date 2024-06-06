@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Typography } from '@mui/material';
+import Heading from '../../components/Heading';
 
 function Classes() {
 
@@ -9,11 +10,7 @@ function Classes() {
 
     return (
         <React.Fragment>
-            <div className='p-4 px-0 flex justify-between items-center'>
-                <Typography variant='h5' fontWeight={600} sx={{ color: '#111111' }}>
-                    Liste des classes
-                </Typography>
-            </div>
+            <Heading label={'Liste des classes'} />
         </React.Fragment>
     );
 }

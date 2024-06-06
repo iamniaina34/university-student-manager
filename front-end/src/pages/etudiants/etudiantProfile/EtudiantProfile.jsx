@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { EtudiantAPI } from '../../../api/entities';
 import { Typography } from '@mui/material';
+import Heading from '../../../components/Heading';
 
 function EtudiantProfile() {
 
@@ -21,11 +22,7 @@ function EtudiantProfile() {
 
     return (
         <React.Fragment>
-            <div className='p-4 px-0 flex justify-between items-center'>
-                <Typography variant='h5' fontWeight={600} sx={{ color: '#111111' }}>
-                    {etudiant.nom + ' ' + etudiant.prenom}
-                </Typography>
-            </div>
+            <Heading label={`${etudiant.nom} ${etudiant.prenom}`} />
         </React.Fragment>
     )
 }

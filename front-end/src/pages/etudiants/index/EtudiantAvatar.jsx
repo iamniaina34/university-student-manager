@@ -19,7 +19,7 @@ function stringToColor(string) {
 
 function EtudiantAvatar({ etudiant }) {
     const fullName = `${etudiant.nom || ''} ${etudiant.prenom || ''}`;
-    const initials = fullName.split(' ').map(name => name[0]).join('');
+    const initials = fullName.split(' ', 2).map(name => name[0]).join('').toUpperCase();
     return (
         <div className='w-full h-full flex justify-start items-center'>
             <Avatar sx={{

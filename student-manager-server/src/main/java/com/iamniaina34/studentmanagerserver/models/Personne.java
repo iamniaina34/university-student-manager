@@ -76,12 +76,12 @@ public class Personne {
         this.lieuNaissance = lieuNaissance;
     }
 
-    public String getCIN() {
+    public String getCin() {
         return cin;
     }
 
-    public void setCIN(String CIN) {
-        this.cin = CIN;
+    public void setCin(String cin) {
+        this.cin = cin;
     }
 
     public LocalDate getdateCin() {

@@ -9,10 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "professeur")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "professeurId"
-)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "professeurId")
 public class Professeur extends Personne{
 
     @Id

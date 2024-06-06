@@ -7,7 +7,7 @@ function SideNavBarItem({ icon, text, active, expanded, onClick }) {
         <Tooltip title={!expanded ? text : ''} placement="right">
             <li
                 className={`
-                    relative flex justify-center items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-all
+                    relative flex justify-center items-center p-2 font-semibold rounded-md cursor-pointer transition-all
                     ${active ? 'bg-green-200 text-green-700' : 'hover:bg-green-50 text-gray-600'}
                     ${expanded ? 'w-full' : ''}
                 `}

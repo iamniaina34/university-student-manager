@@ -7,10 +7,10 @@ function Breadcrumb() {
     const pathnames = location.pathname.split('/').filter((x) => x);
 
     return (
-        <Breadcrumbs aria-label="breadcrumb" separator="›" className='h-8 flex items-end'>
+        <Breadcrumbs aria-label="breadcrumb" separator="›" className='h-10 flex items-center'>
             <Link underline="hover" color="inherit" href="/">
                 <span className='font-semibold text-sm'>
-                    acceuil
+                    /
                 </span>
                 {/* <Home sx={{fontSize: 16}}/> */}
             </Link>

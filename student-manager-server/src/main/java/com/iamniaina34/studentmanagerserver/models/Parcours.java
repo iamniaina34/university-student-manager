@@ -1,9 +1,6 @@
 package com.iamniaina34.studentmanagerserver.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -23,10 +20,12 @@ public class Parcours {
     @Column(name = "parcours_acro", unique = true)
     private String parcoursAcro;
 
+    @JsonIgnoreProperties("parcours")
     @ManyToOne
     @JoinColumn(name = "mention_id", referencedColumnName = "mention_id")
     private Mention mention;
 
+    @JsonIgnoreProperties("parcours")
     @ManyToOne
     @JoinColumn(name = "professeur_id", referencedColumnName = "professeur_id", nullable = true)
     private Professeur responsable;
