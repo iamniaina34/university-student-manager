@@ -1,6 +1,5 @@
 package com.iamniaina34.studentmanagerserver.controllers;
 
-import com.iamniaina34.studentmanagerserver.exceptions.EtudiantCreationException;
 import com.iamniaina34.studentmanagerserver.models.Etudiant;
 import com.iamniaina34.studentmanagerserver.services.EtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;

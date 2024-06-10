@@ -1,4 +1,4 @@
-import { Avatar } from '@mui/material'
+import { Avatar, Typography } from '@mui/material'
 import React from 'react'
 
 function stringToColor(string) {
@@ -17,17 +17,24 @@ function stringToColor(string) {
     return color;
 }
 
-function EtudiantAvatar({ etudiant }) {
+function EtudiantAvatar({ etudiant, size, fontSize }) {
     const fullName = `${etudiant.nom || ''} ${etudiant.prenom || ''}`;
     const initials = fullName.split(' ', 2).map(name => name[0]).join('').toUpperCase();
     return (
         <div className='w-full h-full flex justify-start items-center'>
             <Avatar sx={{
-                width: '2.2rem',
-                height: '2.2rem',
+                width: size || '2.2rem',
+                height: size || '2.2rem',
                 backgroundColor: stringToColor(fullName)
             }}>
-                <span className='text-sm'>{initials}</span>
+                <Typography
+                    variant='body2'
+                    sx={{
+                        fontSize: fontSize || '14px',
+                    }}
+                >
+                    {initials}
+                </Typography>
             </Avatar>
         </div>
     )

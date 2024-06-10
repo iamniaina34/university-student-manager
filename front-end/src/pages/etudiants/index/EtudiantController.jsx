@@ -112,7 +112,7 @@ function EtudiantController(props) {
                                 fontSize: 'small',
                             }}
                         >
-                            Non specifié
+                            Tout
                         </MenuItem>
                         {niveaux.map((niveau) => (
                             <MenuItem
@@ -156,7 +156,7 @@ function EtudiantController(props) {
                                 fontSize: 'small',
                             }}
                         >
-                            Non specifié
+                            Tout
                         </MenuItem>
                         {parcoursList.map((parcours) => (
                             <MenuItem

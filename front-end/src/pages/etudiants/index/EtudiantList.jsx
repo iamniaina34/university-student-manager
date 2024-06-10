@@ -21,7 +21,7 @@ const columns = [
         resizable: false,
         disableColumnMenu: true,
         width: 60,
-        renderCell: (params) => <EtudiantAvatar etudiant={params.row} />
+        renderCell: (params) => <EtudiantAvatar etudiant={params.row} size='2.2rem' />
     },
     {
         field: 'numeroMatricule',
@@ -40,6 +40,7 @@ const columns = [
     {
         field: 'niveau',
         headerName: 'Niveau',
+        sortable: false,
         width: 120,
         valueGetter: (value, row) => row.niveau ? row.niveau.niveauAcro : '',
     },
@@ -54,6 +55,7 @@ const columns = [
         field: 'dateNaissance',
         headerName: 'Date de naissance',
         type: 'string',
+        sortable: false,
         width: 200,
         valueGetter: (value, row) => dayjs(row.dateNaissance).format('DD/MM/YYYY')
     },
@@ -61,6 +63,7 @@ const columns = [
         field: 'cin',
         headerName: 'CIN',
         type: 'string',
+        sortable: false,
         width: 180,
         valueGetter: (value, row) => {
             return row.cin ? row.cin.replace(/(\d{3})(.{3})(.{3})(.{3})/, '$1 $2 $3 $4') : 'Non spécifié';
@@ -69,6 +72,7 @@ const columns = [
     {
         field: 'numeroTelephone',
         headerName: 'Téléphone',
+        sortable: false,
         width: 180,
         valueGetter: (value, row) => {
             return row.numeroTelephone ? row.numeroTelephone.replace(/(\d{3})(.{2})(.{3})(.{2})/, '$1 $2 $3 $4') : 'Non spécifié'
@@ -78,7 +82,7 @@ const columns = [
         field: 'adresse',
         headerName: 'Adresse',
         sortable: false,
-        width: 250,
+        width: 200,
         valueGetter: (v, r) => {
             return r.adresse ? r.adresse : 'Inconnu'
         },
@@ -124,7 +128,7 @@ export default function EtudiantList(props) {
     const handleEtudiantDialogFormClose = () => {
         setIsEtudiantDialogFormOpen(false);
     };
-    
+
     const handleEtudiantEdited = (etudiant, oldMatricule) => {
         onEtudiantEdited(etudiant, oldMatricule);
     }
@@ -162,6 +166,7 @@ export default function EtudiantList(props) {
                 }}
                 pageSizeOptions={[1, 5, 10]}
                 disableRowSelectionOnClick
+                disableColumnMenu
                 checkboxSelection
                 localeText={localText}
                 onRowClick={(row) => { handleRedirect(row.id) }}
@@ -183,7 +188,7 @@ export default function EtudiantList(props) {
                     footer: () => (<div></div>),
                 }}
                 sx={{
-                    height: 735,
+                    maxHeight: 735,
                     '& .MuiDataGrid-virtualScrollerContent': {
                         overflowY: 'auto',
                     },

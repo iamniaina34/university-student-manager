@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { Etudiant } from '../models/model';
 import { EtudiantAPI } from '../api/entities';
 import { HttpStatusCode } from 'axios';
+import { Backdrop, CircularProgress } from '@mui/material';
 
 /**
  * @typedef {'nom' | 'prenom' | 'dateNaissance' | 'lieuNaissance' | 'cin' | 'dateCin' | 'matricule' | 'niveau' | 'parcours' | 'adresse' | 'telephone'} field_name
@@ -149,8 +150,6 @@ function EtudiantDialogForm({ open, title, usage, etudiant, errorSource, errorHe
 
     useEffect(() => {
         setPassedEtudiant(etudiant);
-        console.log(`passed etudiant: `);
-        console.log(etudiant);
     }, [etudiant]);
 
     useEffect(() => {
@@ -159,12 +158,10 @@ function EtudiantDialogForm({ open, title, usage, etudiant, errorSource, errorHe
 
     useEffect(() => {
         setError(errorSource);
-        console.log('source: ' + errorSource);
     }, [errorSource]);
 
     useEffect(() => {
         setErrorText(errorHelperText)
-        console.log('text: ' + errorHelperText);
     }, [errorHelperText]);
 
     return (

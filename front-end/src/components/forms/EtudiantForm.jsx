@@ -298,7 +298,7 @@ function EtudiantForm({ usage, onSubmit, onCancel, etudiant, errorSource, errorH
                             onChange={handleLieuNaissanceChange}
                             inputProps={{
                                 maxLength: 64,
-                                pattern: "^[a-zA-ZÀ-ÿ\s]*$",
+                                // pattern: "^[a-zA-ZÀ-ÿ\s]*$",
                             }}
                             InputLabelProps={{
                                 shrink: true,
