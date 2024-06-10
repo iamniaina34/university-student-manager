@@ -47,29 +47,6 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
-                {/* <div className='flex overflow-hidden'>
-                    <div className=''>
-                        <SideNavBar />
-                    </div>
-                    <div className='py-2 mx-2 flex flex-col flex-1 h-screen w-full items-center overflow-hidden'>
-                        <div className='mb-4 w-full lg:w-10/12 flex flex-col max-h-full gap-4 overflow-auto pr-4'>
-                            <div className='z-10 bg-white flex justify-between items-center sticky top-0'>
-                                <HeaderNav />
-                            </div>
-                            <div className='flex flex-col gap-4'>
-                                <Routes>
-                                    <Route path='/' element={<Home />} />
-                                    <Route path='/etudiants' element={<Etudiants />} />
-                                    <Route path='/etudiants/:numeroMatricule' element={<EtudiantProfile />} />
-                                    <Route path='/etudiants/ajouter' element={<AddEtudiant />} />
-                                    <Route path='/classes' element={<Classes />} />
-                                    <Route path='/cours' element={<Cours />} />
-                                    <Route path='/seances' element={<Seances />} />
-                                </Routes>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
                 <div className='flex flex-col h-screen'>
                     <div id="header">
                         <AppBar
@@ -98,12 +75,12 @@ function App() {
                             <Divider />
                         </AppBar>
                     </div>
-                    <div className='flex flex-row gap-4 h-full'>
+                    <div className='mx-4 flex flex-row gap-4 h-full'>
                         <div id="nav" className='w-64 hidden lg:flex border-r'>
                             <NavList />
                         </div>
                         <div id='content' className='flex flex-col flex-1 h-full w-full items-center overflow-hidden'>
-                            <div className='my-2 w-full xl:w-11/12 flex flex-col max-h-full gap-4 overflow-auto pr-4'>
+                            <div className='my-2 w-full xl:w-11/12 flex flex-col max-h-full gap-4 overflow-auto'>
                                 <div className='z-10 bg-white flex justify-between items-center sticky top-0'>
                                     <HeaderNav />
                                 </div>
