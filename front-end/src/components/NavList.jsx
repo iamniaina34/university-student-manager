@@ -31,12 +31,15 @@ const Items = [
 function NavItem({ item }) {
     return (
         <React.Fragment>
-            <ListItem 
-            disablePadding
-            >
-                <ListItemButton>
+            <ListItem disablePadding>
+                <ListItemButton sx={{
+                    paddingX: '12px',
+                    paddingY: '4px',
+                    borderRadius: '4px',
+                    mb: '4px',
+                }}>
                     <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText>{item.text}</ListItemText>
+                    <ListItemText><span className='font-medium'>{item.text}</span></ListItemText>
                 </ListItemButton>
             </ListItem>
         </React.Fragment>
@@ -45,7 +48,7 @@ function NavItem({ item }) {
 
 function NavList() {
     return (
-        <div className='flex flex-col w-full'>
+        <div className='flex flex-col w-full p-2'>
             {Items.map(item => (
                 <List disablePadding>
                     <NavItem item={item} />

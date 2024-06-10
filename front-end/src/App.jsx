@@ -98,12 +98,12 @@ function App() {
                             <Divider />
                         </AppBar>
                     </div>
-                    <div className='m-4 flex flex-row gap-4 h-full'>
-                        <div id="nav" className='w-fit hidden lg:flex'>
+                    <div className='flex flex-row gap-4 h-full'>
+                        <div id="nav" className='w-64 hidden lg:flex border-r'>
                             <NavList />
                         </div>
                         <div id='content' className='flex flex-col flex-1 h-full w-full items-center overflow-hidden'>
-                            <div className='mb-4 w-full xl:w-11/12 flex flex-col max-h-full gap-4 overflow-auto pr-4'>
+                            <div className='my-2 w-full xl:w-11/12 flex flex-col max-h-full gap-4 overflow-auto pr-4'>
                                 <div className='z-10 bg-white flex justify-between items-center sticky top-0'>
                                     <HeaderNav />
                                 </div>
