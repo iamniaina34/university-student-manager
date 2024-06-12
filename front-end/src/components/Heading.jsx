@@ -3,7 +3,7 @@ import React from 'react'
 
 function Heading({label}) {
     return (
-        <div className='h-10 flex justify-between items-center'>
+        <div className='h-10 sticky flex justify-between items-center'>
             <Typography variant='h5' fontWeight={600} sx={{ color: '#111111' }}>
                 {label}
             </Typography>

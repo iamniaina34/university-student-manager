@@ -3,47 +3,64 @@ import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import EventRoundedIcon from '@mui/icons-material/EventRounded';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
-import { Box, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Items = [
     {
-        icon: <PeopleRoundedIcon />,
+        icon: <PeopleRoundedIcon fontSize='small' />,
         path: "etudiants",
         text: "Etudiants",
     },
     {
-        icon: <SchoolRoundedIcon />,
+        icon: <SchoolRoundedIcon fontSize='small' />,
         path: "classes",
         text: "Classes",
     },
     {
-        icon: <EventRoundedIcon />,
+        icon: <EventRoundedIcon fontSize='small' />,
         path: "seances",
         text: "Séances",
     },
     {
-        icon: <MenuBookRoundedIcon />,
+        icon: <MenuBookRoundedIcon fontSize='small' />,
         path: "cours",
         text: "Cours",
     },
 ];
 
-function NavItem({ item, onClick }) {
+function NavItem({ item, onClick, active = false }) {
+
     return (
         <React.Fragment>
-            <ListItem disablePadding>
+            <ListItem disablePadding >
                 <ListItemButton
                     onClick={onClick}
                     sx={{
-                        paddingX: '12px',
+                        height: '40px',
+                        backgroundColor: active ? `#1a994822` : '#00000000',
                         paddingY: '4px',
-                        borderRadius: '4px',
+                        borderRadius: '0 12px 12px 0',
                         mb: '4px',
                     }}
                 >
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText><span className='text-gray-700 font-medium'>{item.text}</span></ListItemText>
+                    <ListItemIcon
+                        sx={{
+                            color: active ? `#1a9948` : ``,
+                        }}
+                    >
+                        {item.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                    >
+                        <Typography
+                            variant='body2'
+                            fontWeight={420}
+                            color={active ? `#096918` : `#333333`}
+                        >
+                            {item.text}
+                        </Typography>
+                    </ListItemText>
                 </ListItemButton>
             </ListItem>
         </React.Fragment>
@@ -71,10 +88,15 @@ function NavList() {
     }, [location.pathname]);
 
     return (
-        <div className='flex flex-col w-full p-2'>
+        <div className='flex flex-col w-full pr-2'>
             <List disablePadding>
                 {Items.map(item => (
-                    <NavItem item={item} onClick={() => handleItemClick(item)} />
+                    <NavItem
+                        key={item.text}
+                        active={activeItem && activeItem.text === item.text || false}
+                        item={item}
+                        onClick={() => handleItemClick(item)}
+                    />
                 ))}
             </List>
         </div>

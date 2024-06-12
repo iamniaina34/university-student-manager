@@ -28,15 +28,29 @@ const columns = [
         headerName: 'Matricule',
         description: 'numero matricule',
         type: 'string',
-        width: 120
+        width: 120,
     },
     {
-        field: 'noms',
-        headerName: 'Nom et prénoms',
+        field: 'nom',
+        headerName: 'Nom',
+        description: 'Nom',
         type: 'string',
-        width: 250,
-        valueGetter: (value, row) => `${row.nom} ${row.prenom || ''}`
+        width: 150,
     },
+    {
+        field: 'prenom',
+        headerName: 'Prénom',
+        description: 'Prénom',
+        type: 'string',
+        width: 150,
+    },
+    // {
+    //     field: 'noms',
+    //     headerName: 'Nom et prénoms',
+    //     type: 'string',
+    //     width: 250,
+    //     valueGetter: (value, row) => `${row.nom} ${row.prenom || ''}`
+    // },
     {
         field: 'niveau',
         headerName: 'Niveau',
@@ -60,6 +74,13 @@ const columns = [
         valueGetter: (value, row) => dayjs(row.dateNaissance).format('DD/MM/YYYY')
     },
     {
+        field: 'lieuNaissance',
+        headerName: 'Lieu de naissance',
+        type: 'string',
+        sortable: false,
+        width: 200,
+    },
+    {
         field: 'cin',
         headerName: 'CIN',
         type: 'string',
@@ -68,6 +89,14 @@ const columns = [
         valueGetter: (value, row) => {
             return row.cin ? row.cin.replace(/(\d{3})(.{3})(.{3})(.{3})/, '$1 $2 $3 $4') : 'Non spécifié';
         },
+    },
+    {
+        field: 'dateCin',
+        headerName: 'Date de délivrance',
+        type: 'string',
+        sortable: false,
+        width: 200,
+        valueGetter: (value, row) => dayjs(row.dateCin).format('DD/MM/YYYY')
     },
     {
         field: 'numeroTelephone',
@@ -188,6 +217,7 @@ export default function EtudiantList(props) {
                     footer: () => (<div></div>),
                 }}
                 sx={{
+                    // height: 3000,
                     maxHeight: 735,
                     '& .MuiDataGrid-virtualScrollerContent': {
                         overflowY: 'auto',

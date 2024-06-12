@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppBar, Divider, IconButton, Paper, Toolbar, Typography, createTheme } from '@mui/material';
+import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
-import MenuIcon from '@mui/icons-material/Menu';
 import Home from './pages/Home';
 import Etudiants from './pages/etudiants/index/Etudiants';
 import Classes from './pages/classes/Classes';
 import Cours from './pages/cours/Cours';
 import Seances from './pages/seances/Seances';
-import SideNavBar from './components/navBar/SideNavBar';
 import EtudiantProfile from './pages/etudiants/etudiantProfile/EtudiantProfile';
 import AddEtudiant from './pages/etudiants/addEtudiant/AddEtudiant';
 import HeaderNav from './components/navBar/HeaderNav';
 import NavList from './components/NavList';
-
-const drawerWidth = 240;
+import CustomAppBar from './components/CustomAppBar';
 
 const theme = createTheme({
     palette: {
@@ -28,60 +25,28 @@ const theme = createTheme({
 });
 
 function App() {
-
-    const handleDrawerClose = () => {
-        setIsClosing(true);
-        setMobileOpen(false);
-    };
-
-    const handleDrawerTransitionEnd = () => {
-        setIsClosing(false);
-    };
-
-    const handleDrawerToggle = () => {
-        if (!isClosing) {
-            setMobileOpen(!mobileOpen);
-        }
-    };
+    const [open, setOpen] = useState(false);
+    const handleMenuOpen = () => {setOpen(true)};
+    const handleMenuClose = () => {setOpen(false)};
 
     return (
         <ThemeProvider theme={theme}>
             <BrowserRouter>
-                <div className='flex flex-col h-screen'>
-                    <div id="header">
-                        <AppBar
-                            color='transparent'
-                            position="sticky"
-                            elevation={0}
-                        >
-                            <Toolbar>
-                                <div className='block lg:hidden'>
-                                    <IconButton
-                                        color="inherit"
-                                        aria-label="open drawer"
-                                        edge="start"
-                                        onClick={handleDrawerToggle}
-                                        sx={{
-                                            mr: 2,
-                                        }}
-                                    >
-                                        <MenuIcon />
-                                    </IconButton>
-                                </div>
-                                <Typography variant="h6" noWrap component="div">
-                                    USManager
-                                </Typography>
-                            </Toolbar>
-                            <Divider />
-                        </AppBar>
+                <div className='flex flex-col h-screen overflow-hidden'>
+                    <div id="header" className='border border-none'>
+                        <CustomAppBar 
+                        open={open}
+                        onMenuClick={handleMenuOpen}
+                        onClose={handleMenuClose}
+                        />
                     </div>
-                    <div className='mx-4 flex flex-row gap-4 h-full'>
-                        <div id="nav" className='w-64 hidden lg:flex border-r'>
+                    <div className='flex flex-row h-full'>
+                        <div id="nav" className='py-4 lg: w-3/12 max-w-80 hidden lg:flex border-r'>
                             <NavList />
                         </div>
-                        <div id='content' className='flex flex-col flex-1 h-full w-full items-center overflow-hidden'>
-                            <div className='my-2 w-full xl:w-11/12 flex flex-col max-h-full gap-4 overflow-auto'>
-                                <div className='z-10 bg-white flex justify-between items-center sticky top-0'>
+                        <div id='content' className='mx-4 flex flex-col flex-1 h-full w-full items-center overflow-hidden'>
+                            <div className='my-4 w-full xl:w-11/12 max-w-screen-xl flex flex-col max-h-full gap-4 overflow-auto'>
+                                <div className='z-10 h-10 bg-white flex flex-col justify-center items-center sticky top-0'>
                                     <HeaderNav />
                                 </div>
                                 <div className='flex flex-col gap-4'>
