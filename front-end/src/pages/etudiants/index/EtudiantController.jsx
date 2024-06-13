@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Button, FormControl, InputAdornment, InputLabel, MenuItem, Select, TextField, createTheme } from '@mui/material';
+import { Button, ButtonGroup, FormControl, IconButton, InputAdornment, InputLabel, Menu, MenuItem, Select, TextField, Typography, createTheme } from '@mui/material';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { Add } from '@mui/icons-material';
+import { Add, ImportExport } from '@mui/icons-material';
 import { EtudiantAPI } from '../../../api/entities';
 import { HttpStatusCode } from 'axios';
 import EtudiantDialogForm from '../../../components/EtudiantDialogForm';
+import { ArrowDropDownIcon } from '@mui/x-date-pickers';
+import EtudiantImportDialog from '../../../components/EtudiantImportDialog';
 
 function EtudiantController(props) {
     const theme = createTheme();
@@ -13,6 +15,8 @@ function EtudiantController(props) {
     const [niveau, setNiveau] = useState('');
     const [parcours, setParcours] = useState('');
     const [open, setOpen] = useState(false);
+    const [etudiantImportDialogOpen, setEtudiantImportDialogOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const handleSearchValueChange = (event) => {
         const value = event.target.value;
@@ -43,6 +47,27 @@ function EtudiantController(props) {
     const handleEtudiantAdded = (etudiant) => {
         handleClose();
         onEtudiantAdded(etudiant);
+    }
+
+    const handleMoreAddBtnClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    }
+
+    const handleMoreAddBtnClose = () => {
+        setAnchorEl(null);
+    }
+
+    const showEtudiantImportDialog = () => {
+        setAnchorEl(null);
+        setEtudiantImportDialogOpen(true);
+    }
+
+    const handleEtudiantImportDialogClose = () => {
+        setEtudiantImportDialogOpen(false);
+    }
+
+    const handleImport = (importedData) => {
+        props.onImport(importedData)
     }
 
     return (
@@ -173,18 +198,64 @@ function EtudiantController(props) {
                 </FormControl>
             </div>
             <div id='more'>
-                <Button
+                <ButtonGroup
                     disableElevation
                     variant='contained'
                     size='medium'
-                    onClick={handleOpen}
-                    startIcon={<Add />}
-                    sx={{
-                        fontSize: 'small',
+                >
+                    <Button
+                        onClick={handleOpen}
+                        sx={{
+                            fontSize: 'small',
+                        }}
+                    >
+                        Ajouter
+                    </Button>
+                    <Button
+                        onClick={handleMoreAddBtnClick}
+                        sx={{
+                            width: '12px'
+                        }}
+                    >
+                        <ArrowDropDownIcon />
+                    </Button>
+                </ButtonGroup>
+                <Menu
+                    disableAutoFocus
+                    id="dropdown-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMoreAddBtnClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
                     }}
                 >
-                    Ajouter
-                </Button>
+                    <MenuItem
+                        onClick={showEtudiantImportDialog}
+                        sx={{
+                            py: 0,
+                            mx: 'auto',
+                            width: '132px',
+                            fontSize: 'small',
+                        }}
+                    >
+                        <div className="flex flex-row justify-between gap-4">
+                            <Typography
+                                variant='button'
+                            >
+                                Importer
+                            </Typography>
+                            <div>
+                                <ImportExport />
+                            </div>
+                        </div>
+                    </MenuItem>
+                </Menu>
             </div>
             <EtudiantDialogForm
                 open={open}
@@ -192,6 +263,11 @@ function EtudiantController(props) {
                 title={'Ajouter un étudiant'}
                 onClose={handleClose}
                 onEtudiantAdded={handleEtudiantAdded}
+            />
+            <EtudiantImportDialog
+                onImport={handleImport}
+                onClose={handleEtudiantImportDialogClose}
+                open={etudiantImportDialogOpen}
             />
         </div>
     );

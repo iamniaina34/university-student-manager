@@ -11,6 +11,8 @@ import DialogConfirmation from '../../../components/DialogConfirmation';
 import EtudiantDialogForm from '../../../components/EtudiantDialogForm';
 import { EtudiantAPI } from '../../../api/entities';
 import { HttpStatusCode } from 'axios';
+import ExcelJs from 'exceljs';
+import { saveAs } from 'file-saver';
 
 const columns = [
     {
@@ -42,6 +44,7 @@ const columns = [
         headerName: 'Prénom',
         description: 'Prénom',
         type: 'string',
+        sortable: false,
         width: 150,
     },
     // {
@@ -79,6 +82,7 @@ const columns = [
         type: 'string',
         sortable: false,
         width: 200,
+        valueGetter: (value, row) => row.lieuNaissance ? row.lieuNaissance : 'Inconnu',
     },
     {
         field: 'cin',
@@ -87,7 +91,7 @@ const columns = [
         sortable: false,
         width: 180,
         valueGetter: (value, row) => {
-            return row.cin ? row.cin.replace(/(\d{3})(.{3})(.{3})(.{3})/, '$1 $2 $3 $4') : 'Non spécifié';
+            return row.cin ? row.cin.replace(/(\d{3})(.{3})(.{3})(.{3})/, '$1 $2 $3 $4') : 'Inconnu';
         },
     },
     {
@@ -96,7 +100,7 @@ const columns = [
         type: 'string',
         sortable: false,
         width: 200,
-        valueGetter: (value, row) => dayjs(row.dateCin).format('DD/MM/YYYY')
+        valueGetter: (value, row) => row.dateCin ? dayjs(row.dateCin).format('DD/MM/YYYY') : 'Inconnu'
     },
     {
         field: 'numeroTelephone',
@@ -104,7 +108,7 @@ const columns = [
         sortable: false,
         width: 180,
         valueGetter: (value, row) => {
-            return row.numeroTelephone ? row.numeroTelephone.replace(/(\d{3})(.{2})(.{3})(.{2})/, '$1 $2 $3 $4') : 'Non spécifié'
+            return row.numeroTelephone ? row.numeroTelephone.replace(/(\d{3})(.{2})(.{3})(.{2})/, '$1 $2 $3 $4') : 'Inconnu'
         },
     },
     {
@@ -173,6 +177,45 @@ export default function EtudiantList(props) {
         setIsConfirmationDialogOpen(false);
     };
 
+    const handleEtudiantImport = (importedData) => {
+        console.log(importedData);
+    }
+
+    const exportToExcel = (rows, cols) => {
+        const workbook = new ExcelJs.Workbook();
+        const worksheet = workbook.addWorksheet('Page 1');
+
+        worksheet.columns = cols.filter(col => !col.field.includes('Avatar')).map(col => ({
+            header: col.headerName,
+            key: col.field,
+        }))
+
+        rows.forEach(row => {
+            const rowData = cols.reduce((acc, col) => {
+                if (col.field === 'niveau') {
+                    acc[col.field] = row.niveau ? row.niveau.niveauAcro : '';
+                } else if (col.field === 'parcours') {
+                    acc[col.field] = row.parcours ? row.parcours.parcoursAcro : '';
+                } else if (col.field === 'dateNaissance') {
+                    acc[col.field] = row.dateNaissance ? dayjs(row.dateNaissance).format('YYYY-MM-DD') : '';
+                } else if (col.field === 'dateCin') {
+                    acc[col.field] = row.dateCin ? dayjs(row.dateCin).format('YYYY-MM-DD') : '';
+                } else {
+                    acc[col.field] = row[col.field];
+                }
+                return acc;
+            }, {});
+            worksheet.addRow(rowData);
+        });
+
+        workbook.xlsx
+            .writeBuffer()
+            .then(buffer => {
+                const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                saveAs(blob, 'ListeDesEtudiantsExported.xlsx');
+            })
+    }
+
     useEffect(() => {
         setRows(props.rows);
     }, [props.rows]);
@@ -209,6 +252,7 @@ export default function EtudiantList(props) {
                                 onRefresh={handleRefresh}
                                 onEdit={handleEdit}
                                 onDelete={() => setIsConfirmationDialogOpen(true)}
+                                onExport={() => exportToExcel(rows, columns)}
                             />
                             <Divider />
                         </>

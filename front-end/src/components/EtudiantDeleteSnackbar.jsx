@@ -53,7 +53,7 @@ function EtudiantDeleteSnackbar({ open = false, etudiants = [], onClose = () => 
                         <Button
                             onClick={undoDelete}
                             variant='text'
-                            color='info'
+                            color='primary'
                             size='small'
                             disabled={!deletedEtudiants}
                         >

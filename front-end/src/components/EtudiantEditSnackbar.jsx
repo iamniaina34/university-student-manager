@@ -92,7 +92,7 @@ function EtudiantEditSnackbar({ open = false, oldEtudiant, newEtudiant, onClose 
                         <Button
                             onClick={undoChanges}
                             variant='text'
-                            color='info'
+                            color='primary'
                             size='small'
                             disabled={!oldValue || !newValue}
                         >
@@ -101,7 +101,7 @@ function EtudiantEditSnackbar({ open = false, oldEtudiant, newEtudiant, onClose 
                         <Button
                             onClick={consulterEtudiant}
                             variant='contained'
-                            color='info'
+                            color='primary'
                             size='small'
                             disabled={!newValue || !newValue.numeroMatricule}
                         >

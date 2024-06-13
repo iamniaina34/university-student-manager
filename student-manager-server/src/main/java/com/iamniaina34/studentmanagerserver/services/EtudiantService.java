@@ -48,6 +48,30 @@ public class EtudiantService {
         return etudiantRepository.save(etudiant);
     }
 
+    public List<Etudiant> createAllEtudiant(List<Etudiant> etudiants) {
+        if (etudiants.isEmpty()) return null;
+
+        for (Etudiant etudiant : etudiants) {
+            etudiant.setPrenom(etudiant.getPrenom() == null || etudiant.getPrenom().isBlank() ? null : etudiant.getPrenom());
+            etudiant.setLieuNaissance(etudiant.getLieuNaissance() == null || etudiant.getLieuNaissance().isBlank() ? null : etudiant.getLieuNaissance());
+            etudiant.setCin(etudiant.getCin() == null || etudiant.getCin().isBlank() ? null : etudiant.getCin());
+            etudiant.setdateCin(etudiant.getCin() == null || etudiant.getdateCin() == null ? null : etudiant.getdateCin());
+            etudiant.setAdresse(etudiant.getAdresse() == null || etudiant.getAdresse().isBlank() ? null : etudiant.getAdresse());
+            etudiant.setNumeroTelephone(etudiant.getNumeroTelephone() == null || etudiant.getNumeroTelephone().isBlank() ? null : etudiant.getNumeroTelephone());
+
+            if (etudiantRepository.findById(etudiant.getNumeroMatricule()).isPresent()) {
+                throw new EtudiantCreationException("Duplicate entry for numero_matricule " + etudiant.getNumeroMatricule());
+            }
+            if (etudiant.getCin() != null && etudiantRepository.findByCin(etudiant.getCin()).isPresent()) {
+                throw new EtudiantCreationException("Duplicate entry for cin " + etudiant.getCin());
+            }
+            if (etudiant.getNumeroTelephone() != null && etudiantRepository.findByNumeroTelephone(etudiant.getNumeroTelephone()).isPresent()) {
+                throw new EtudiantCreationException("Duplicate entry for numero_telephone" + etudiant.getNumeroTelephone());
+            }
+        }
+        return etudiantRepository.saveAll(etudiants);
+    }
+
     public Etudiant updateEtudiant(String numeroMatricule, Etudiant etudiantDetails) {
         Etudiant etudiant = etudiantRepository.findById(numeroMatricule).orElse(null);
 

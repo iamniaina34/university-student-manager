@@ -4,6 +4,7 @@ import axios from 'axios';
 const BASE_URL = 'http://192.168.182.49:8085';
 const INDEX_PATH = "/index";
 const ADD_PATH = "/create";
+const ADD_ALL_PATH = "/createAll";
 const UPDATE_PATH = "/update";
 const DELETE_PATH = "/delete";
 const DELETE_BY_ID_LIST_PATH = "/delete-by-id-list"
@@ -30,6 +31,14 @@ const createAPIRequest = (URL) => {
     post: async (data) => {
       try {
         const response = await axios.post(BASE_URL + URL + ADD_PATH, data);
+        return response;
+      } catch (error) {
+        throw error;
+      }
+    },
+    postAll: async (data) => {
+      try {
+        const response = await axios.post(BASE_URL + URL + ADD_ALL_PATH, data);
         return response;
       } catch (error) {
         throw error;

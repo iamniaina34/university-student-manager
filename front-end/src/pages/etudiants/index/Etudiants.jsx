@@ -4,6 +4,8 @@ import EtudiantList from './EtudiantList';
 import Heading from '../../../components/Heading';
 import EtudiantController from './EtudiantController';
 import EtudiantDeleteSnackbar from '../../../components/EtudiantDeleteSnackbar';
+import { HttpStatusCode } from 'axios';
+import EtudiantAddAllSnackbar from '../../../components/EtudiantAddAllSnackbar';
 
 function Etudiants() {
     const [etudiants, setEtudiants] = useState([]);
@@ -15,6 +17,8 @@ function Etudiants() {
     const [selectedNiveau, setSelectedNiveau] = useState('');
     const [selectedParcours, setSelectedParcours] = useState('');
     const [etudiantDeleteSnackbarOpen, setEtudiantDeleteSnackbarOpen] = useState(false);
+    const [etudiantAddAllSnackbarOpen, setEtudiantAddAllSnackbarOpen] = useState(false);
+    const [effectif, setEffectif] = useState(0);
     const [refreshKey, setRefreshKey] = useState(0);
 
     const handleRefresh = () => {
@@ -37,7 +41,6 @@ function Etudiants() {
     }
 
     const handleEtudiantDeleted = (numeroMatriculeList) => {
-        console.log(numeroMatriculeList);
         const updatedDeletedEtudiants = etudiants.filter(etudiant => numeroMatriculeList.includes(etudiant.numeroMatricule));
         setDeletedEtudiants(updatedDeletedEtudiants);
 
@@ -62,10 +65,8 @@ function Etudiants() {
     }
 
     const handleEtudiantDeleteSnackbarClose = () => {
-        console.log('Im closing');
         setEtudiantDeleteSnackbarOpen(false);
         const list = deletedEtudiants.map(etudiant => etudiant.numeroMatricule);
-        console.log(list);
         EtudiantAPI.deleteByIdList(list)
             .then(res => {
                 if (res.status === HttpStatusCode.Ok) {
@@ -75,6 +76,15 @@ function Etudiants() {
             .catch(err => {
                 err.response && console.error(err.response.data)
             })
+    }
+
+    const showEtudiantAddAllSnackbar = () => {
+        setEtudiantAddAllSnackbarOpen(true);
+    }
+
+    const handleEtudiantAddAllSnackbarClose = () => {
+        setEtudiantAddAllSnackbarOpen(false);
+        setEffectif(0);
     }
 
     useEffect(() => {
@@ -103,7 +113,6 @@ function Etudiants() {
     }, [refreshKey]);
 
     useEffect(() => {
-        console.log('etudiant: ' + etudiants.length);
         filterEtudiants();
     }, [searchValue, selectedNiveau, selectedParcours, etudiants]);
 
@@ -153,6 +162,23 @@ function Etudiants() {
         ]));
     };
 
+    const handleImport = (etudiants) => {
+        EtudiantAPI.postAll(etudiants)
+            .then(r => {
+                if (r.status === HttpStatusCode.Created) {
+                    setEtudiants((prev) => [
+                        ...prev,
+                        ...etudiants.map(etudiant => ({
+                            ...etudiant,
+                        })),
+                    ]);
+                    setEffectif(etudiants.length)
+                    showEtudiantAddAllSnackbar()
+                }
+            })
+            .catch(e => console.log(e));
+    }
+
     return (
         <React.Fragment>
             <Heading label={'Liste des étudiants'} />
@@ -163,6 +189,7 @@ function Etudiants() {
                 onNiveauChange={handleNiveauChange}
                 onParcoursChange={handleParcoursChange}
                 onEtudiantAdded={handleEtudiantAdded}
+                onImport={handleImport}
             />
             <EtudiantList
                 rows={filteredEtudiants}
@@ -170,6 +197,12 @@ function Etudiants() {
                 onEtudiantEdited={handleEtudiantEdited}
                 onEtudiantDeleted={handleEtudiantDeleted}
             />
+            <EtudiantAddAllSnackbar
+                effectif={effectif}
+                open={etudiantAddAllSnackbarOpen}
+                onClose={handleEtudiantAddAllSnackbarClose}
+            />
+
             <EtudiantDeleteSnackbar
                 etudiants={deletedEtudiants}
                 key={'etudiantDeleteSnackbar'}

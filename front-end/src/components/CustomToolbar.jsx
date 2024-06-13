@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { GridPagination, GridSelectedRowCount, GridToolbarContainer, GridToolbarDensitySelector } from '@mui/x-data-grid';
-import { IconButton, createTheme } from '@mui/material';
+import { IconButton, Tooltip, createTheme } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MoreVert, RefreshTwoTone } from '@mui/icons-material';
+import { MoreVert, RefreshTwoTone, SaveAlt, Upload } from '@mui/icons-material';
 
 function MoreVertButton() {
     return (
@@ -24,66 +24,89 @@ function MoreVertButton() {
 
 function RefreshButton({ onRefresh }) {
     return (
-        <IconButton
-            disableTouchRipple
-            onClick={() => onRefresh()}
-            sx={{
-                ":hover": {
-                    color: 'black',
-                },
-            }}
-        >
-            <RefreshTwoTone fontSize='small' />
-        </IconButton>
+        <Tooltip title="Rafraîchir">
+            <IconButton
+                disableTouchRipple
+                onClick={() => onRefresh()}
+                sx={{
+                    ":hover": {
+                        color: 'black',
+                    },
+                }}
+            >
+                <RefreshTwoTone fontSize='small' />
+            </IconButton>
+        </Tooltip>
+    );
+}
 
+function ExportButton({ onExport }) {
+    return (
+        <Tooltip title='Télécharger en Excel'>
+            <IconButton
+                disableTouchRipple
+                onClick={() => onExport()}
+                sx={{
+                    ":hover": {
+                        color: 'black',
+                    },
+                }}
+            >
+                <SaveAlt fontSize='small' />
+            </IconButton>
+        </Tooltip>
     );
 }
 
 function EditButton({ onEdit }) {
     return (
-        <IconButton
-            disableTouchRipple
-            onClick={onEdit}
-            sx={{
-                ":hover": {
-                    color: 'black',
-                },
-            }}
-        >
-            <EditIcon
-                fontSize='small'
+        <Tooltip title='Modifier'>
+            <IconButton
+                disableTouchRipple
+                onClick={onEdit}
                 sx={{
-                    height: 18,
-                    width: 18,
+                    ":hover": {
+                        color: 'black',
+                    },
                 }}
-            />
-        </IconButton>
+            >
+                <EditIcon
+                    fontSize='small'
+                    sx={{
+                        height: 18,
+                        width: 18,
+                    }}
+                />
+            </IconButton>
+        </Tooltip>
     );
 }
 
 function DeleteButton({ onDelete }) {
     return (
-        <IconButton
-            disableTouchRipple
-            onClick={onDelete}
-            sx={{
-                ":hover": {
-                    color: '#ee0000',
-                },
-            }}
-        >
-            <DeleteIcon
-                fontSize='small'
+        <Tooltip title='Supprimer'>
+            <IconButton
+                disableTouchRipple
+                onClick={onDelete}
                 sx={{
-                    height: 18,
-                    width: 18,
+                    ":hover": {
+                        color: '#ee0000',
+                    },
                 }}
-            />
-        </IconButton>
+            >
+                <DeleteIcon
+                    fontSize='small'
+                    sx={{
+                        height: 18,
+                        width: 18,
+                    }}
+                />
+            </IconButton>
+        </Tooltip>
     );
 }
 
-function CustomToolbar({ selectedRows, onRefresh, onEdit, onDelete }) {
+function CustomToolbar({ selectedRows, onRefresh, onEdit, onDelete, onExport }) {
     const theme = createTheme();
     return (
         <GridToolbarContainer
@@ -96,9 +119,14 @@ function CustomToolbar({ selectedRows, onRefresh, onEdit, onDelete }) {
             <div className='flex gap-1'>
                 {/* <MoreVertButton /> */}
                 {selectedRows.length === 0 && (
-                    <RefreshButton
-                        onRefresh={onRefresh}
-                    />
+                    <React.Fragment>
+                        <RefreshButton
+                            onRefresh={onRefresh}
+                        />
+                        <ExportButton
+                            onExport={onExport}
+                        />
+                    </React.Fragment>
                 )}
                 {selectedRows.length === 1 && (
                     <EditButton

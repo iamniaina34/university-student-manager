@@ -38,6 +38,12 @@ public class EtudiantController {
         return etudiantService.createEtudiant((etudiant));
     }
 
+    @PostMapping("/createAll")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<Etudiant> createAllEtudiant(@RequestBody List<Etudiant> etudiants) {
+        return etudiantService.createAllEtudiant(etudiants);
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/update/{numeroMatricule}")
     public Etudiant updateEtudiant(@PathVariable String numeroMatricule, @RequestBody Etudiant etudiant) {

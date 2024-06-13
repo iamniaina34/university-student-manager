@@ -55,7 +55,7 @@ function EtudiantAddSnackbar({ open = false, onClose = () => { }, matricule = ''
                     <Button
                         onClick={handleButtonClick}
                         variant='contained'
-                        color='info'
+                        color='primary'
                         size='small'
                         disabled={resultingMatricule === '' || resultingMatricule === null}
                     >
