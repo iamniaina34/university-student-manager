@@ -163,10 +163,9 @@ export default function EtudiantList(props) {
     }
 
     const handleDelete = (ids) => {
-        EtudiantAPI.deleteByIdList(ids)
+        EtudiantAPI.delete('0')
             .then(res => {
                 if (res.status === HttpStatusCode.Ok) {
-                    console.log('deleted: ' + ids);
                     onEtudiantDeleted(ids);
                 }
             })

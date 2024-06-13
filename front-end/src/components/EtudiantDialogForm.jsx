@@ -6,6 +6,8 @@ import { Etudiant } from '../models/model';
 import { EtudiantAPI } from '../api/entities';
 import { HttpStatusCode } from 'axios';
 import { Backdrop, CircularProgress } from '@mui/material';
+import EtudiantAddSnackbar from './EtudiantAddSnackbar';
+import EtudiantEditSnackbar from './EtudiantEditSnackbar';
 
 /**
  * @typedef {'nom' | 'prenom' | 'dateNaissance' | 'lieuNaissance' | 'cin' | 'dateCin' | 'matricule' | 'niveau' | 'parcours' | 'adresse' | 'telephone'} field_name
@@ -23,10 +25,14 @@ import { Backdrop, CircularProgress } from '@mui/material';
 
 function EtudiantDialogForm({ open, title, usage, etudiant, errorSource, errorHelperText, onClose, onEtudiantAdded, onEtudiantEdited, onError }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [etudiantDialogTitle, setEtudiantDialogTitle] = useState('')
+    const [etudiantAddSnackbarOpen, setEtudiantAddSnackbarOpen] = useState(false);
+    const [etudiantEditSnackbarOpen, setEtudiantEditSnackbarOpen] = useState(false);
+    const [etudiantDialogTitle, setEtudiantDialogTitle] = useState('');
     const [error, setError] = useState(errorSource || '');
     const [errorText, setErrorText] = useState(errorHelperText || '');
     const [passedEtudiant, setPassedEtudiant] = useState(etudiant || Etudiant);
+    const [oldEtudiant, setOldEtudiant] = useState({})
+    const [newEtudiant, setNewEtudiant] = useState({})
 
     const initError = () => {
         setError('');
@@ -49,7 +55,9 @@ function EtudiantDialogForm({ open, title, usage, etudiant, errorSource, errorHe
             .post(etudiant)
             .then(response => {
                 if (response.status === HttpStatusCode.Created) {
+                    setNewEtudiant(etudiant)
                     handleClose();
+                    setEtudiantAddSnackbarOpen(true);
                     onEtudiantAdded(etudiant);
                 } else {
                     console.log(`Etudiant ${etudiant.numeroMatricule} not added. Reason: ${response.message}`);
@@ -80,48 +88,57 @@ function EtudiantDialogForm({ open, title, usage, etudiant, errorSource, errorHe
 
     const hanldeEditEtudiant = (etudiant, oldMatricule) => {
         if (oldMatricule !== null && oldMatricule !== '') {
-            EtudiantAPI.put(oldMatricule, etudiant)
+            EtudiantAPI
+                .get(oldMatricule)
                 .then(r => {
-                    if (r.status === HttpStatusCode.Ok) {
-                        onEtudiantEdited(etudiant, oldMatricule);
-                        handleClose();
-                    } else {
-                        console.error(`Couldn't edit etudiant`);
-                    }
+                    setOldEtudiant(r.data)
+                    EtudiantAPI
+                        .put(oldMatricule, etudiant)
+                        .then(r => {
+                            if (r.status === HttpStatusCode.Ok) {
+                                setNewEtudiant(etudiant)
+                                setEtudiantEditSnackbarOpen(true);
+                                onEtudiantEdited(etudiant, oldMatricule);
+                                handleClose();
+                            } else {
+                                console.error(`Couldn't edit etudiant`);
+                            }
+                        })
+                        .catch(e => {
+                            if (e.response) {
+                                const data = e.response.data.toLowerCase();
+                                console.error(data);
+                                if (data.includes('not found')) {
+                                    setErrorText('Vous ne pouvez pas changer la valeur de ce champs')
+                                    if (data.includes('matricule')) {
+                                        setError('matricule');
+                                    }
+                                }
+                                else if (data.includes('duplicate')) {
+                                    setErrorText('Valeur déjà assignée à un autre Étudiant');
+                                    if (data.includes('matricule')) {
+                                        setError('matricule');
+                                    }
+                                    else if (data.includes('cin')) {
+                                        setError('cin');
+                                    }
+                                    else if (data.includes('telephone')) {
+                                        setError('telephone');
+                                    }
+                                }
+                                else if (data.includes('mismatch')) {
+                                    setErrorText('Vous ne pouvez pas changer sa valeur');
+                                    if (data.includes('matricule')) {
+                                        setError('matricule');
+                                    }
+                                }
+                                else {
+                                    onError(data);
+                                }
+                            }
+                        })
                 })
-                .catch(e => {
-                    if (e.response) {
-                        const data = e.response.data.toLowerCase();
-                        console.error(data);
-                        if (data.includes('not found')) {
-                            setErrorText('Vous ne pouvez pas changer la valeur de ce champs')
-                            if (data.includes('matricule')) {
-                                setError('matricule');
-                            }
-                        }
-                        else if (data.includes('duplicate')) {
-                            setErrorText('Valeur déjà assignée à un autre Étudiant');
-                            if (data.includes('matricule')) {
-                                setError('matricule');
-                            }
-                            else if (data.includes('cin')) {
-                                setError('cin');
-                            }
-                            else if (data.includes('telephone')) {
-                                setError('telephone');
-                            }
-                        }
-                        else if (data.includes('mismatch')) {
-                            setErrorText('Vous ne pouvez pas changer sa valeur');
-                            if (data.includes('matricule')) {
-                                setError('matricule');
-                            }
-                        }
-                        else {
-                            onError(data);
-                        }
-                    }
-                })
+                .catch(r => console.log(e));
         }
         else {
             console.error(`oldMatricule undefined`);
@@ -141,6 +158,10 @@ function EtudiantDialogForm({ open, title, usage, etudiant, errorSource, errorHe
                 console.error(`Wrong usage value`);
                 break;
         }
+    }
+
+    const handleUndoChanges = () => {
+        onEtudiantEdited(oldEtudiant, oldEtudiant.numeroMatricule)
     }
 
     useEffect(() => {
@@ -165,20 +186,34 @@ function EtudiantDialogForm({ open, title, usage, etudiant, errorSource, errorHe
     }, [errorHelperText]);
 
     return (
-        <DialogForm
-            open={isOpen}
-            title={etudiantDialogTitle}
-            onClose={handleClose}
-        >
-            <EtudiantForm
-                usage={usage}
-                etudiant={passedEtudiant}
-                onSubmit={handleSubmit}
-                onCancel={handleCancel}
-                errorSource={error}
-                errorHelperText={errorText}
+        <React.Fragment>
+            <DialogForm
+                open={isOpen}
+                title={etudiantDialogTitle}
+                onClose={handleClose}
+            >
+                <EtudiantForm
+                    usage={usage}
+                    etudiant={passedEtudiant}
+                    onSubmit={handleSubmit}
+                    onCancel={handleCancel}
+                    errorSource={error}
+                    errorHelperText={errorText}
+                />
+            </DialogForm>
+            <EtudiantAddSnackbar
+                open={etudiantAddSnackbarOpen}
+                onClose={() => { setEtudiantAddSnackbarOpen(false); setNewEtudiant({}) }}
+                matricule={newEtudiant.numeroMatricule}
             />
-        </DialogForm>
+            <EtudiantEditSnackbar
+                open={etudiantEditSnackbarOpen}
+                oldEtudiant={oldEtudiant}
+                newEtudiant={newEtudiant}
+                onClose={() => { setEtudiantEditSnackbarOpen(false); setNewEtudiant({}) }}
+                onUndo={handleUndoChanges}
+            />
+        </React.Fragment>
     );
 }
 

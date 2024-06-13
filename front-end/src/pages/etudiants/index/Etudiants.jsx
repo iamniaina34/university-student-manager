@@ -3,15 +3,18 @@ import { EtudiantAPI, NiveauAPI, ParcoursAPI } from '../../../api/entities';
 import EtudiantList from './EtudiantList';
 import Heading from '../../../components/Heading';
 import EtudiantController from './EtudiantController';
+import EtudiantDeleteSnackbar from '../../../components/EtudiantDeleteSnackbar';
 
 function Etudiants() {
     const [etudiants, setEtudiants] = useState([]);
+    const [deletedEtudiants, setDeletedEtudiants] = useState([]);
     const [filteredEtudiants, setFilteredEtudiants] = useState([]);
     const [niveaux, setNiveaux] = useState([]);
     const [parcours, setParcours] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [selectedNiveau, setSelectedNiveau] = useState('');
     const [selectedParcours, setSelectedParcours] = useState('');
+    const [etudiantDeleteSnackbarOpen, setEtudiantDeleteSnackbarOpen] = useState(false);
     const [refreshKey, setRefreshKey] = useState(0);
 
     const handleRefresh = () => {
@@ -24,7 +27,8 @@ function Etudiants() {
         const index = etudiants.findIndex(etudiant => etudiant.numeroMatricule === oldMatricule)
         if (index !== -1) {
             let alteredEtudiants = [...etudiants]
-            alteredEtudiants[index] = {...editedEtudiant,
+            alteredEtudiants[index] = {
+                ...editedEtudiant,
                 niveau: niveaux.find(n => n.niveauId === editedEtudiant.niveau.niveauId),
                 parcours: parcours.find(p => p.parcoursId === editedEtudiant.parcours.parcoursId),
             }
@@ -33,8 +37,44 @@ function Etudiants() {
     }
 
     const handleEtudiantDeleted = (numeroMatriculeList) => {
-        const etudiantList = etudiants.filter(etudiant => !numeroMatriculeList.includes(etudiant.numeroMatricule))
-        setEtudiants(etudiantList);
+        console.log(numeroMatriculeList);
+        const updatedDeletedEtudiants = etudiants.filter(etudiant => numeroMatriculeList.includes(etudiant.numeroMatricule));
+        setDeletedEtudiants(updatedDeletedEtudiants);
+
+        const updatedEtudiants = etudiants.filter(etudiant => !numeroMatriculeList.includes(etudiant.numeroMatricule));
+        setEtudiants(updatedEtudiants);
+
+        setEtudiantDeleteSnackbarOpen(true);
+    };
+
+    const handleEtudiantDeleteSnackbarUndo = () => {
+        console.log(etudiants);
+        console.log(deletedEtudiants);
+
+        setEtudiants((prev) => [
+            ...prev,
+            ...deletedEtudiants.map(etudiant => ({
+                ...etudiant,
+            })),
+        ]);
+        handleRefresh();
+        setEtudiantDeleteSnackbarOpen(false);
+    }
+
+    const handleEtudiantDeleteSnackbarClose = () => {
+        console.log('Im closing');
+        setEtudiantDeleteSnackbarOpen(false);
+        const list = deletedEtudiants.map(etudiant => etudiant.numeroMatricule);
+        console.log(list);
+        EtudiantAPI.deleteByIdList(list)
+            .then(res => {
+                if (res.status === HttpStatusCode.Ok) {
+                    console.log('deleted: ' + ids);
+                }
+            })
+            .catch(err => {
+                err.response && console.error(err.response.data)
+            })
     }
 
     useEffect(() => {
@@ -63,6 +103,7 @@ function Etudiants() {
     }, [refreshKey]);
 
     useEffect(() => {
+        console.log('etudiant: ' + etudiants.length);
         filterEtudiants();
     }, [searchValue, selectedNiveau, selectedParcours, etudiants]);
 
@@ -128,6 +169,13 @@ function Etudiants() {
                 onRefresh={handleRefresh}
                 onEtudiantEdited={handleEtudiantEdited}
                 onEtudiantDeleted={handleEtudiantDeleted}
+            />
+            <EtudiantDeleteSnackbar
+                etudiants={deletedEtudiants}
+                key={'etudiantDeleteSnackbar'}
+                onClose={handleEtudiantDeleteSnackbarClose}
+                onUndo={handleEtudiantDeleteSnackbarUndo}
+                open={etudiantDeleteSnackbarOpen}
             />
         </React.Fragment>
     );

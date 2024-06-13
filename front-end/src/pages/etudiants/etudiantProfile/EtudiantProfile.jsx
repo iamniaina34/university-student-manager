@@ -4,6 +4,30 @@ import { EtudiantAPI } from '../../../api/entities';
 import Heading from '../../../components/Heading';
 import EtudiantAvatar from '../index/EtudiantAvatar';
 import { Typography } from '@mui/material';
+import dayjs from 'dayjs';
+
+function DataShower({ label, value = "" }) {
+    return (
+        <div className='w-full flex flex-row justify-start items-center'>
+            <div id="label" className='basis-2/12 w-fit'>
+                <Typography
+                    variant='subtitle2'
+                    fontSize={14}
+                >
+                    {label}
+                </Typography>
+            </div>
+            <div id="value" className='basis-full'>
+                <Typography
+                    variant='subtitle1'
+                    fontSize={14}
+                >
+                    {value}
+                </Typography>
+            </div>
+        </div>
+    );
+}
 
 function EtudiantProfile() {
 
@@ -23,11 +47,10 @@ function EtudiantProfile() {
 
     return (
         <React.Fragment>
-            {/* <Heading label={`${etudiant.nom} ${etudiant.prenom}`} /> */}
-            <div className='flex flex-col gap-8'>
-                <div className='w-full p-2 flex flex-row gap-8'>
-                    <div className='border-4 border-green-300 border-opacity-50 rounded-full'>
-                        <EtudiantAvatar etudiant={etudiant} size={'5rem'} fontSize={'40px'} />
+            <div className='flex flex-col gap-4'>
+                <div className='w-full p-2 flex flex-row gap-4 border rounded-lg shadow-slate-200'>
+                    <div className='w-fit h-fit'>
+                        <EtudiantAvatar etudiant={etudiant} size={'5rem'} fontSize={'36px'} roundedFull={true} />
                     </div>
                     <div className='w-full py-1 flex flex-col'>
                         <Typography
@@ -44,6 +67,7 @@ function EtudiantProfile() {
                             <Typography
                                 variant='subtitle2'
                                 fontWeight={500}
+                                fontSize={12}
                                 sx={{
                                     color: '#888888',
                                 }}
@@ -53,6 +77,7 @@ function EtudiantProfile() {
                             <Typography
                                 variant='subtitle2'
                                 fontWeight={500}
+                                fontSize={12}
                                 sx={{
                                     color: '#888888',
                                 }}
@@ -62,38 +87,52 @@ function EtudiantProfile() {
                         </div>
                     </div>
                 </div>
-                <div id="infoG" className='flex flex-col gap-4'>
+                <div id="infoG" className='px-4 py-2 flex flex-col border rounded-lg'>
                     <Typography
                         variant="subtitle2"
                         gutterBottom
+                        sx={{
+                            fontSize: '16px',
+                            mb: '16px',
+                        }}
                     >
                         Informations Générales
                     </Typography>
-                    <div>
-
-                    </div>
+                    <DataShower label={'Nom'} value={etudiant.nom} />
+                    <DataShower label={'Prénom'} value={etudiant.prenom} />
+                    <DataShower label={'Date de naissance'} value={dayjs(etudiant.dateNaissance).format('DD/MM/YYYY')} />
+                    <DataShower label={'Lieu de naissance'} value={etudiant.lieuNaissance} />
+                    <DataShower label={'CIN'} value={etudiant.cin} />
+                    <DataShower label={'Date de délivrance'} value={dayjs(etudiant.dateCin).format('DD/MM/YYYY')} />
                 </div>
-                <div id="infoSco" className='flex flex-col gap-4'>
+                <div id="infoSco" className='px-4 py-2 flex flex-col border rounded-lg'>
                     <Typography
                         variant="subtitle2"
                         gutterBottom
+                        sx={{
+                            fontSize: '16px',
+                            mb: '16px',
+                        }}
                     >
                         Informations Scolaires
                     </Typography>
-                    <div>
-                        
-                    </div>
+                    <DataShower label={'Numero matricule'} value={etudiant.numeroMatricule} />
+                    <DataShower label={'Niveau'} value={`${etudiant.niveau ? etudiant.niveau.niveauDesign : ''} (${etudiant.niveau ? etudiant.niveau.niveauAcro : ''})`} />
+                    <DataShower label={'Parcours'} value={`${etudiant.parcours ? etudiant.parcours.parcoursDesign : ''} (${etudiant.parcours ? etudiant.parcours.parcoursAcro : ''})`} />
                 </div>
-                <div id="infoSup" className='flex flex-col gap-4'>
+                <div id="infoSup" className='px-4 py-2 flex flex-col border rounded-lg'>
                     <Typography
                         variant="subtitle2"
                         gutterBottom
+                        sx={{
+                            fontSize: '16px',
+                            mb: '16px',
+                        }}
                     >
-                        Informations Suplementaires
+                        Informations Supplémentaires
                     </Typography>
-                    <div>
-                        
-                    </div>
+                    <DataShower label={'Adresse'} value={etudiant.adresse} />
+                    <DataShower label={'Téléphone'} value={etudiant.numeroTelephone} />
                 </div>
             </div>
         </React.Fragment>

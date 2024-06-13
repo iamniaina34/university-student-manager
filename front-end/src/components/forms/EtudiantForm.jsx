@@ -136,8 +136,8 @@ function EtudiantForm({ usage, onSubmit, onCancel, etudiant, errorSource, errorH
     useEffect(() => {
         const existingEtudiant = etudiant || Etudiant;
 
-        setNom(existingEtudiant.nom || '')
-        setPrenom(existingEtudiant.prenom || '')
+        setNom(existingEtudiant.nom ? existingEtudiant.nom.trim() : '')
+        setPrenom(existingEtudiant.prenom ? existingEtudiant.prenom.trim() : '')
         setDateNaissance(existingEtudiant.dateNaissance || '')
         setLieuNaissance(existingEtudiant.lieuNaissance || '')
         setCin(existingEtudiant.cin || '')
@@ -615,7 +615,7 @@ function EtudiantForm({ usage, onSubmit, onCancel, etudiant, errorSource, errorH
                     <Button
                         fullWidth
                         variant='outlined'
-                        color="secondary"
+                        color='secondary'
                         size="medium"
                         onClick={handleCancel}
                     >

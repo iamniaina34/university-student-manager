@@ -94,8 +94,7 @@ function CustomToolbar({ selectedRows, onRefresh, onEdit, onDelete }) {
             }}
         >
             <div className='flex gap-1'>
-                <MoreVertButton 
-                />
+                {/* <MoreVertButton /> */}
                 {selectedRows.length === 0 && (
                     <RefreshButton
                         onRefresh={onRefresh}
