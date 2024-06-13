@@ -7,9 +7,6 @@ function EtudiantDeleteSnackbar({ open = false, etudiants = [], onClose = () => 
     const [deletedEtudiants, setDeletedEtudiants] = useState([])
 
     const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
         setIsOpen(false);
         setDeletedEtudiants([]);
         onClose();

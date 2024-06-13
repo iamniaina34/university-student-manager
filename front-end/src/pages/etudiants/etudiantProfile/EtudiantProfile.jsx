@@ -101,9 +101,9 @@ function EtudiantProfile() {
                     <DataShower label={'Nom'} value={etudiant.nom} />
                     <DataShower label={'Prénom'} value={etudiant.prenom} />
                     <DataShower label={'Date de naissance'} value={dayjs(etudiant.dateNaissance).format('DD/MM/YYYY')} />
-                    <DataShower label={'Lieu de naissance'} value={etudiant.lieuNaissance} />
-                    <DataShower label={'CIN'} value={etudiant.cin} />
-                    <DataShower label={'Date de délivrance'} value={dayjs(etudiant.dateCin).format('DD/MM/YYYY')} />
+                    <DataShower label={'Lieu de naissance'} value={(etudiant.lieuNaissance !== null && etudiant.lieuNaissance !== '') ? etudiant.lieuNaissance : 'Inconnu'} />
+                    <DataShower label={'CIN'} value={(etudiant.cin !== null && etudiant.cin !== '') ? etudiant.cin : 'Inconnu'} />
+                <DataShower label={'Date de délivrance'} value={(etudiant.dateCin !== null || etudiant.dateCin === '') ? dayjs(etudiant.dateCin).format('DD/MM/YYYY') : 'Inconnu'} />
                 </div>
                 <div id="infoSco" className='px-4 py-2 flex flex-col border rounded-lg'>
                     <Typography
@@ -131,8 +131,8 @@ function EtudiantProfile() {
                     >
                         Informations Supplémentaires
                     </Typography>
-                    <DataShower label={'Adresse'} value={etudiant.adresse} />
-                    <DataShower label={'Téléphone'} value={etudiant.numeroTelephone} />
+                    <DataShower label={'Adresse'} value={etudiant.adresse !== null && etudiant.adresse !== '' ? etudiant.adresse : 'Inconnu'} />
+                    <DataShower label={'Téléphone'} value={etudiant.numeroTelephone !== null && etudiant.numeroTelephone !== '' ? etudiant.numeroTelephone : 'Inconnu'} />
                 </div>
             </div>
         </React.Fragment>
